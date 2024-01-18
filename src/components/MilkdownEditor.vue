@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { Milkdown, useEditor } from '@milkdown/vue'
 import { Editor } from '@milkdown/core'
 
@@ -19,5 +19,9 @@ defineExpose({ get })
 </script>
 
 <template>
-  <Milkdown />
+  <div>
+    <slot name="header" />
+    <Milkdown />
+    <slot name="footer" />
+  </div>
 </template>
