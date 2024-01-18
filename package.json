@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix"
   },
   "dependencies": {
     "@milkdown/core": "^7.3.3",
@@ -26,7 +28,9 @@
     "vue": "^3.4.14"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.6.3",
     "@vitejs/plugin-vue": "^5.0.3",
+    "eslint": "^8.56.0",
     "typescript": "^5.3.3",
     "unocss": "^0.58.3",
     "vite": "^5.0.11",
