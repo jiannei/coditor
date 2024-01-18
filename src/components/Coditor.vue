@@ -1,12 +1,12 @@
 <script setup>
 import { MilkdownProvider } from '@milkdown/vue'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useDark, useFileDialog } from '@vueuse/core'
 import { shiki, shikiConfig } from '@s2nc/milkdown-plugin-shiki'
 import { commonmark } from '@milkdown/preset-commonmark'
 import { callCommand } from '@milkdown/utils'
 import { placeholderConfig, placeholder as placeholderPlugin } from '@s2nc/milkdown-plugin-placeholder'
-import { listener } from '@milkdown/plugin-listener'
+import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import { remoteUpload, remoteUploadConfig, remoteUploader } from '@s2nc/milkdown-plugin-upload'
 import { uploadConfig } from '@milkdown/plugin-upload'
 import { Decoration } from '@milkdown/prose/view'
@@ -20,6 +20,8 @@ import useImageUpload from '@/Hooks/useImageUpload.js'
 import 'prosemirror-view/style/prosemirror.css'
 import 'prosemirror-tables/style/tables.css'
 import '@/../css/editor.css'
+import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
+import { Base64 } from 'js-base64'
 
 const props = defineProps({
   content: {
@@ -87,7 +89,36 @@ onChange((files) => {
 
 const isDark = useDark({ storageKey: 'theme' })
 
-const plugins = ref([
+const configs = ref([
+  // 编辑器配置
+  { config: (ctx) => { // 主题
+    ctx.update(editorViewOptionsCtx, (prev) => {
+      return {
+        ...prev,
+        attributes: {
+          // todo 移除 height
+          class: `${props.height !== 'full' ? `min-h-[${props.height}]` : ''} max-w-none prose prose-slate dark:prose-invert outline-none`,
+        },
+      }
+    })
+  } },
+  { config: (ctx) => {
+    // 编辑模式
+    ctx.update(editorViewOptionsCtx, prev => ({
+      ...prev,
+      editable: () => !props.readonly,
+    }))
+
+    // 默认内容
+    ctx.set(defaultValueCtx, Base64.decode(props.content))
+
+    // 内容监听
+    ctx.get(listenerCtx).markdownUpdated((ctx, markdown) => {
+      console.log('markdown', markdown)
+      emit('update:content', Base64.encode(markdown))
+    })
+  } },
+  // 插件配置
   { plugin: commonmark },
   { plugin: listener }, // 只读模式不需要
   { plugin: clipboard }, // 只读模式不需要
@@ -117,14 +148,10 @@ const plugins = ref([
   }) },
   { plugin: placeholderPlugin, config: ctx => ctx.set(placeholderConfig.key, props.placeholder) }, // 只读模式不需要
 ])
-
-const markdown = ref(props.content)
-
-watch(markdown, value => emit('update:content', value))
 </script>
 
 <template>
   <MilkdownProvider>
-    <Editor ref="editor" v-model:content="markdown" :readonly="readonly" :plugins="plugins" :height="height" />
+    <Editor ref="editor" :configs="configs" />
   </MilkdownProvider>
 </template>
