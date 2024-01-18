@@ -1,6 +1,6 @@
 <script setup>
 import { Milkdown, useEditor } from '@milkdown/vue'
-import { Editor, rootCtx } from '@milkdown/core'
+import { Editor, commandsCtx, rootCtx } from '@milkdown/core'
 
 const { configs } = defineProps({
   configs: {
@@ -9,14 +9,23 @@ const { configs } = defineProps({
   },
 })
 
-const { get } = useEditor((root) => {
+const { loading, get } = useEditor((root) => {
   return Editor.make()
     .config(ctx => ctx.set(rootCtx, root))
     .config(ctx => configs.map(item => item.config).filter(item => item).forEach(item => item(ctx)))
     .use(configs.map(item => item.plugin).filter(item => item))
 })
 
-defineExpose({ get })
+function callCommand(cmd, payload) {
+  if (loading.value)
+    return
+
+  get().action(ctx =>
+    ctx.get(commandsCtx).call(cmd, payload),
+  )
+}
+
+defineExpose({ callCommand })
 </script>
 
 <template>

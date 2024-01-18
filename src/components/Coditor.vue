@@ -4,7 +4,6 @@ import { ref } from 'vue'
 import { useDark, useFileDialog } from '@vueuse/core'
 import { shiki, shikiConfig } from '@s2nc/milkdown-plugin-shiki'
 import { commonmark } from '@milkdown/preset-commonmark'
-import { callCommand } from '@milkdown/utils'
 import { placeholderConfig, placeholder as placeholderPlugin } from '@s2nc/milkdown-plugin-placeholder'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import { remoteUpload, remoteUploadConfig, remoteUploader } from '@s2nc/milkdown-plugin-upload'
@@ -74,18 +73,16 @@ const emit = defineEmits(['update:content', 'update:headings'])
 const editor = ref()
 const { open, onChange } = useFileDialog({ accept: 'image/*' })
 
-function runCommand(cmd) {
-  if (cmd === 'RemoteUpload') {
+function callCommand(cmd, payload) {
+  if (cmd === 'RemoteUpload' && !payload) {
     open()
     return
   }
 
-  editor.value.get().action(callCommand(cmd))
+  editor.value.callCommand(cmd, payload)
 }
 
-onChange((files) => {
-  editor.value.get().action(callCommand('RemoteUpload', files))
-})
+onChange(files => callCommand('RemoteUpload', files))
 
 const isDark = useDark({ storageKey: 'theme' })
 
