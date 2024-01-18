@@ -19,9 +19,5 @@ defineExpose({ get })
 </script>
 
 <template>
-  <div>
-    <slot name="header" />
-    <Milkdown />
-    <slot name="footer" />
-  </div>
+  <Milkdown />
 </template>
