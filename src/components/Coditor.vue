@@ -143,8 +143,15 @@ const configs = ref([
 
 <template>
   <div>
+    <!-- header -->
+    <slot name="header" :call-command="callCommand" />
+
+    <!-- editor -->
     <MilkdownProvider>
       <Editor ref="editor" :configs="configs" />
     </MilkdownProvider>
+
+    <!-- footer -->
+    <slot :call-command="callCommand" />
   </div>
 </template>
