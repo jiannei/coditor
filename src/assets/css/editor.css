@@ -1,0 +1,58 @@
+.milkdown {
+    @apply w-full px-4;
+}
+
+.editor {
+}
+
+.emoji {
+    @apply w-4 h-4 inline-block;
+}
+
+[contenteditable='false'] .ProseMirror-selectednode {
+    @apply outline-none;
+}
+
+.ProseMirror[data-placeholder]::before {
+    @apply pointer-events-none content-[attr(data-placeholder)] absolute !text-slate-400 !dark:text-slate-500 text-base;
+}
+
+.prose :where(a):not(:where(.not-prose, .not-prose *)) {
+    @apply !text-cyan-500;
+}
+
+.prose :where(p img):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply inline-block rounded-sm;
+}
+
+.prose :where(pre):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply !bg-slate-800 max-h-96 text-xs;
+}
+
+.prose :where(p code):not(:where([class~='not-prose'] *)) {
+    @apply before:content-[''] after:content-[''] inline-flex items-baseline max-w-full overflow-x-scroll !bg-slate-100 !dark:bg-slate-800 !text-slate-500 px-1 py-px rounded;
+}
+
+.prose :where(code):not(:where([class~='not-prose'] *)) {
+    @apply !text-slate-500;
+}
+
+.prose :where(blockquote p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply before:content-[''] after:content-[''];
+}
+
+/*[data-type=emoji] {
+  @apply inline-flex items-center
+}*/
+
+/*.split-editor {*/
+/*    @apply flex items-center justify-between*/
+/*}*/
+
+/*.milkdown-split-editor {*/
+/*    @apply flex-1*/
+/*}*/
+
+/*.milkdown.fullscreen {*/
+/*    @apply fixed inset-0 overflow-y-scroll z-50 bg-slate-50*/
+/*}*/

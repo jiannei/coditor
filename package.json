@@ -9,6 +9,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@milkdown/core": "^7.3.3",
+    "@milkdown/plugin-clipboard": "^7.3.3",
+    "@milkdown/plugin-emoji": "^7.3.3",
+    "@milkdown/plugin-history": "^7.3.3",
+    "@milkdown/plugin-indent": "^7.3.3",
+    "@milkdown/plugin-listener": "^7.3.3",
+    "@milkdown/preset-commonmark": "^7.3.3",
+    "@milkdown/preset-gfm": "^7.3.3",
+    "@milkdown/prose": "^7.3.3",
+    "@milkdown/utils": "^7.3.3",
+    "@milkdown/vue": "^7.3.3",
+    "@s2nc/milkdown-plugin-placeholder": "^0.2.0",
+    "@s2nc/milkdown-plugin-shiki": "^0.3.0",
+    "@s2nc/milkdown-plugin-upload": "^0.2.1",
     "vue": "^3.4.14"
   },
   "devDependencies": {
