@@ -1,8 +1,14 @@
 .milkdown {
-    @apply w-full px-4;
+    @apply w-full flex flex-col;
 }
 
 .editor {
+    @apply px-4
+}
+
+/*placeholder*/
+.ProseMirror[data-placeholder]::before {
+    @apply pointer-events-none content-[attr(data-placeholder)] absolute top-4 !text-slate-400 !dark:text-slate-500 text-base;
 }
 
 .emoji {
@@ -11,10 +17,6 @@
 
 [contenteditable='false'] .ProseMirror-selectednode {
     @apply outline-none;
-}
-
-.ProseMirror[data-placeholder]::before {
-    @apply pointer-events-none content-[attr(data-placeholder)] absolute !text-slate-400 !dark:text-slate-500 text-base;
 }
 
 .prose :where(a):not(:where(.not-prose, .not-prose *)) {
@@ -40,19 +42,3 @@
 .prose :where(blockquote p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply before:content-[''] after:content-[''];
 }
-
-/*[data-type=emoji] {
-  @apply inline-flex items-center
-}*/
-
-/*.split-editor {*/
-/*    @apply flex items-center justify-between*/
-/*}*/
-
-/*.milkdown-split-editor {*/
-/*    @apply flex-1*/
-/*}*/
-
-/*.milkdown.fullscreen {*/
-/*    @apply fixed inset-0 overflow-y-scroll z-50 bg-slate-50*/
-/*}*/

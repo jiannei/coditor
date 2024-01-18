@@ -47,10 +47,6 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
-  height: {
-    type: String,
-    default: 'full',
-  },
   headings: {
     type: Array,
     default: () => [],
@@ -68,9 +64,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update:content', 'update:headings'])
 
-// const cacheStorage = cache ? useStorage(`editor${id ? `-${id}` : ''}`, '') : ref('')
-
 const editor = ref()
+
 const { open, onChange } = useFileDialog({ accept: 'image/*' })
 
 function callCommand(cmd, payload) {
@@ -93,8 +88,7 @@ const configs = ref([
       return {
         ...prev,
         attributes: {
-          // todo 移除 height
-          class: `${props.height !== 'full' ? `min-h-[${props.height}]` : ''} max-w-none prose prose-slate dark:prose-invert outline-none`,
+          class: 'max-w-none prose prose-slate dark:prose-invert outline-none',
         },
       }
     })
@@ -148,7 +142,9 @@ const configs = ref([
 </script>
 
 <template>
-  <MilkdownProvider>
-    <Editor ref="editor" :configs="configs" />
-  </MilkdownProvider>
+  <div>
+    <MilkdownProvider>
+      <Editor ref="editor" :configs="configs" />
+    </MilkdownProvider>
+  </div>
 </template>
