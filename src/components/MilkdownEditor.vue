@@ -1,17 +1,7 @@
 <script setup>
 import { Milkdown, useEditor } from '@milkdown/vue'
-import { Editor, editorViewOptionsCtx, rootCtx } from '@milkdown/core'
-import { commonmark } from '@milkdown/preset-commonmark'
+import { Editor, editorViewOptionsCtx } from '@milkdown/core'
 import { callCommand, replaceAll } from '@milkdown/utils'
-import { listener } from '@milkdown/plugin-listener'
-import { clipboard } from '@milkdown/plugin-clipboard'
-import { gfm } from '@milkdown/preset-gfm'
-import { history } from '@milkdown/plugin-history'
-import { indent } from '@milkdown/plugin-indent'
-import { emoji } from '@milkdown/plugin-emoji'
-import { shiki } from '@s2nc/milkdown-plugin-shiki'
-import { placeholder as placeholderPlugin } from '@s2nc/milkdown-plugin-placeholder'
-import { remoteUpload } from '@s2nc/milkdown-plugin-upload'
 
 import 'prosemirror-view/style/prosemirror.css'
 import 'prosemirror-tables/style/tables.css'
@@ -46,25 +36,12 @@ function milk(ctx) {
 }
 
 const { loading, get } = useEditor((root) => {
+  const { configCallback, plugins } = config(root)
+
   return Editor.make()
     .config(milk)
-    .config(config)
-    .config((ctx) => {
-      // 编辑器初始化配置
-      ctx.set(rootCtx, root)
-    })
-    .use([
-      commonmark,
-      listener,
-      clipboard,
-      gfm,
-      history,
-      indent,
-      emoji,
-      remoteUpload,
-      shiki,
-      placeholderPlugin,
-    ])
+    .config(configCallback)
+    .use(plugins)
 })
 
 // 清除缓存
