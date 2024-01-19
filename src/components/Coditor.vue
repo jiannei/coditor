@@ -1,20 +1,19 @@
 <script setup>
 import { MilkdownProvider } from '@milkdown/vue'
-import { computed, ref } from 'vue'
+import { computed, inject, ref, watch } from 'vue'
 import { useFileDialog } from '@vueuse/core'
 import { headingIdGenerator } from '@milkdown/preset-commonmark'
 import { nanoid } from '@milkdown/utils'
-import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
-import { Base64 } from 'js-base64'
-import { listenerCtx } from '@milkdown/plugin-listener'
-import Editor from './MilkdownEditor.vue'
-
 import 'prosemirror-view/style/prosemirror.css'
 import 'prosemirror-tables/style/tables.css'
 import '../assets/css/editor.css'
+import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
+import { Base64 } from 'js-base64'
+import { listenerCtx } from '@milkdown/plugin-listener'
+import MilkdownEditor from './MilkdownEditor.vue'
 
-const { configs, cache, readonly, success } = defineProps({
-  configs: {
+const { cache, readonly, success, plugins } = defineProps({
+  plugins: {
     type: Array,
     default: () => [],
   },
@@ -35,6 +34,9 @@ const { configs, cache, readonly, success } = defineProps({
 const editor = ref()
 const { open, onChange } = useFileDialog({ accept: 'image/*' })
 
+// 监听 cmd 变化
+watch(inject('cmd'), value => callCommand(value))
+
 function callCommand(cmd, payload) {
   if (cmd === 'RemoteUpload' && !payload) {
     open()
@@ -51,22 +53,9 @@ const content = defineModel('content', { default: '' })
 const headings = []
 
 // configs = 默认配置 + 传入配置
-const pluginConfigs = computed(() => {
-  const cfgs = configs
-
-  cfgs.push(
-    // 主题
-    { config: (ctx) => {
-      ctx.update(editorViewOptionsCtx, (prev) => {
-        return {
-          ...prev,
-          attributes: {
-            class: 'max-w-none prose prose-slate dark:prose-invert outline-none',
-          },
-        }
-      })
-    } },
-    { config: (ctx) => {
+const configs = computed(() => {
+  plugins.push({
+    config: (ctx) => {
       // 编辑模式
       ctx.update(editorViewOptionsCtx, prev => ({
         ...prev,
@@ -98,10 +87,10 @@ const pluginConfigs = computed(() => {
 
         content.value = Base64.encode(markdown)
       })
-    } },
-  )
+    },
+  })
 
-  return cfgs
+  return plugins
 })
 
 function getHeadings() {
@@ -112,16 +101,7 @@ defineExpose({ getHeadings })
 </script>
 
 <template>
-  <div>
-    <!-- header -->
-    <slot name="header" :call-command="callCommand" />
-
-    <!-- editor -->
-    <MilkdownProvider>
-      <Editor ref="editor" :configs="pluginConfigs" />
-    </MilkdownProvider>
-
-    <!-- footer -->
-    <slot :call-command="callCommand" />
-  </div>
+  <MilkdownProvider>
+    <MilkdownEditor ref="editor" :configs="configs" />
+  </MilkdownProvider>
 </template>
