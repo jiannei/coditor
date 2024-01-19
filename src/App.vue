@@ -10,8 +10,6 @@ import { editorViewOptionsCtx } from '@milkdown/core'
 import { clipboard } from '@milkdown/plugin-clipboard'
 import { history } from '@milkdown/plugin-history'
 import { gfm } from '@milkdown/preset-gfm'
-import { commonmark } from '@milkdown/preset-commonmark'
-import { listener } from '@milkdown/plugin-listener'
 import { indent } from '@milkdown/plugin-indent'
 import { emoji } from '@milkdown/plugin-emoji'
 import { shiki, shikiConfig } from '@s2nc/milkdown-plugin-shiki'
@@ -31,9 +29,8 @@ const plugins = ref([
     })
   } },
   // 插件配置
-  { plugin: commonmark }, // 只读模式不需要
-  { plugin: listener }, // 只读模式不需要
   { plugin: clipboard }, // 只读模式不需要
+  { plugin: placeholder, config: ctx => ctx.set(placeholderConfig.key, '开始分享你的故事～') },
   { plugin: gfm },
   { plugin: history },
   { plugin: indent },
@@ -43,7 +40,6 @@ const plugins = ref([
     langs: ['bash', 'c', 'css', 'go', 'html', 'java', 'javascript', 'js', 'json', 'markdown', 'php', 'python', 'sql', 'sh', 'rust'],
     dark: false,
   }) },
-  { plugin: placeholder, config: ctx => ctx.set(placeholderConfig.key, '开始分享你的故事～') },
 ])
 const content = ref('')
 

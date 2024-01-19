@@ -63,10 +63,10 @@ const configs = computed(() => {
 
       // heading id
       ctx.set(headingIdGenerator.key, (node) => {
-        if (node.attrs.id)
-          return node.attrs.id // 防止内存溢出
+        let id = node.attrs.id
 
-        const id = nanoid()
+        if (!id)
+          id = nanoid()
 
         headings.push({
           text: node.textContent,
