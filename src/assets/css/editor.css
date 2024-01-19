@@ -3,7 +3,7 @@
 }
 
 .editor {
-    @apply px-4
+    @apply px-4;
 }
 
 /*placeholder*/

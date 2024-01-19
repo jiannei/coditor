@@ -4,11 +4,7 @@ import { computed, inject, ref, watch } from 'vue'
 import { useFileDialog } from '@vueuse/core'
 import { headingIdGenerator } from '@milkdown/preset-commonmark'
 import { nanoid } from '@milkdown/utils'
-import 'prosemirror-view/style/prosemirror.css'
-import 'prosemirror-tables/style/tables.css'
-import '../assets/css/editor.css'
 import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
-import { Base64 } from 'js-base64'
 import { listenerCtx } from '@milkdown/plugin-listener'
 import MilkdownEditor from './MilkdownEditor.vue'
 
@@ -63,7 +59,7 @@ const configs = computed(() => {
       }))
 
       // 默认内容
-      ctx.set(defaultValueCtx, Base64.decode(content.value))
+      ctx.set(defaultValueCtx, content.value)
 
       // heading id
       ctx.set(headingIdGenerator.key, (node) => {
@@ -83,9 +79,7 @@ const configs = computed(() => {
 
       // 内容监听
       ctx.get(listenerCtx).markdownUpdated((ctx, markdown) => {
-        console.log('markdown', markdown)
-
-        content.value = Base64.encode(markdown)
+        content.value = markdown
       })
     },
   })
