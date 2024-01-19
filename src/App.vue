@@ -15,6 +15,7 @@ import { listener } from '@milkdown/plugin-listener'
 import { indent } from '@milkdown/plugin-indent'
 import { emoji } from '@milkdown/plugin-emoji'
 import { shiki, shikiConfig } from '@s2nc/milkdown-plugin-shiki'
+import { placeholder, placeholderConfig } from '@s2nc/milkdown-plugin-placeholder'
 import Coditor from './components/Coditor.vue'
 
 const plugins = ref([
@@ -42,7 +43,7 @@ const plugins = ref([
     langs: ['bash', 'c', 'css', 'go', 'html', 'java', 'javascript', 'js', 'json', 'markdown', 'php', 'python', 'sql', 'sh', 'rust'],
     dark: false,
   }) },
-  // { plugin: placeholderPlugin, config: ctx => ctx.set(placeholderConfig.key, '开始分享你的故事吧～') },
+  { plugin: placeholder, config: ctx => ctx.set(placeholderConfig.key, '开始分享你的故事～') },
 ])
 const content = ref('')
 
