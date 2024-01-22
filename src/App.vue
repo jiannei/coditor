@@ -25,7 +25,7 @@ const plugins = ref([
         return {
           ...prev,
           attributes: {
-            class: 'max-w-none prose prose-slate dark:prose-invert outline-none',
+            class: 'min-h-[24rem] max-w-none prose prose-slate dark:prose-invert outline-none',
           },
         }
       })
@@ -83,7 +83,7 @@ const { open, onChange } = useFileDialog({ accept: 'image/*' })
 <template>
   <div class="h-dvh flex items-center justify-center">
     <div class="max-w-6xl mx-auto w-full">
-      <CoditorContainer v-slot="{ call }" class="border border-slate-200 dark:border-slate-700 hover:border-slate-300 hover:dark:border-slate-600 rounded-md min-h-[24rem]">
+      <CoditorContainer v-slot="{ call }" class="border border-slate-200 dark:border-slate-700 hover:border-slate-300 hover:dark:border-slate-600 rounded-md">
         <div v-if="toolbar.length" class="w-full bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-t-md">
           <ul class="flex items-center space-x-1">
             <li v-for="(item, key) in toolbar" :key="key" class="px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer" @click="call(item.command)">
