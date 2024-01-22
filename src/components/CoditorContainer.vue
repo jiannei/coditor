@@ -1,7 +1,7 @@
 <script setup>
 import { provide, ref } from 'vue'
 
-const command = ref('')
+const command = ref()
 function call(cmd, payload) {
   command.value = { command: cmd, payload }
 }

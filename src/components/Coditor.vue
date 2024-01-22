@@ -21,11 +21,7 @@ const { readonly, plugins } = defineProps({
 const editor = ref()
 
 // 监听 cmd 变化
-watch(inject('command'), (value) => {
-  const { command, payload } = value
-
-  editor.value.callCommand(command, payload)
-})
+watch(inject('command'), ({ command, payload }) => editor.value.callCommand(command, payload))
 
 const content = defineModel('content', { default: '' })
 
