@@ -2,15 +2,13 @@
 import { provide, ref } from 'vue'
 
 const command = ref()
-function call(cmd, payload) {
-  command.value = { command: cmd, payload }
-}
 
 provide('command', command)
+provide('callCommand', (cmd, payload) => command.value = { command: cmd, payload })
 </script>
 
 <template>
   <div>
-    <slot :call="call" />
+    <slot />
   </div>
 </template>

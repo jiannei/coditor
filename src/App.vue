@@ -19,6 +19,8 @@ import { Decoration } from 'prosemirror-view'
 import { uploadConfig } from '@milkdown/plugin-upload'
 import Coditor from './components/Coditor.vue'
 import CoditorContainer from './components/CoditorContainer.vue'
+import CoditorToolbarItem from './components/CoditorToolbarItem.vue'
+import CoditorToolbar from './components/CoditorToolbar.vue'
 
 const plugins = ref([
   // 编辑器配置
@@ -92,30 +94,37 @@ const toolbar = ref([
   { icon: 'arrow-forward-up', name: 'redo', command: 'Redo' },
 ])
 
-const callback = ref()
+let callback = null
 
 const { open, onChange } = useFileDialog({ accept: 'image/*' })
 
-onChange(files => callback.value('RemoteUpload', files))
+onChange(files => callback('RemoteUpload', files))
+
+function call(command, callCommand) {
+  callback = callCommand
+
+  if (command === 'RemoteUpload') {
+    open()
+    return
+  }
+
+  callCommand(command)
+}
 </script>
 
 <template>
   <div class="h-dvh flex items-center justify-center bg-stone-100 dark:bg-slate-800">
     <div class="max-w-6xl mx-auto w-full">
-      <CoditorContainer v-slot="{ call }" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-300 hover:dark:border-slate-600 rounded-md shadow-sm">
-        <div v-if="toolbar.length" class="w-full bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-t-md">
+      <CoditorContainer class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-300 hover:dark:border-slate-600 rounded-md shadow-sm">
+        <CoditorToolbar :toolbar="toolbar" class="w-full bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-t-md">
           <ul class="flex items-center space-x-1">
             <li v-for="(item, key) in toolbar" :key="key">
-              <button
-                type="button" class="bg-transparent px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer"
-                @mouseup="item.command !== 'RemoteUpload' ? callback(item.command) : open()"
-                @mousedown.prevent="callback = call"
-              >
+              <CoditorToolbarItem :command="item.command" class="bg-transparent px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md" @call="call">
                 <span :class="[`i-tabler:${item.icon}`, item.class]" class="inline-block w-4 h-4" />
-              </button>
+              </CoditorToolbarItem>
             </li>
           </ul>
-        </div>
+        </CoditorToolbar>
 
         <Coditor v-model:content="content" :plugins="plugins" />
       </CoditorContainer>
