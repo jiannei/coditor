@@ -92,7 +92,7 @@ const { open, onChange } = useFileDialog({ accept: 'image/*' })
           </ul>
         </div>
 
-        <Coditor v-model:content="content" :plugins="plugins" />
+        <Coditor v-model:content="content" :plugins="plugins" @command="call()" />
       </CoditorContainer>
     </div>
   </div>

@@ -18,6 +18,8 @@ const { readonly, plugins } = defineProps({
   },
 })
 
+const emit = defineEmits(['command'])
+
 const editor = ref()
 
 const cmd = inject('cmd')
@@ -27,10 +29,8 @@ watch(cmd, (value) => {
   if (!value)
     return
 
-  const rt = editor.value.callCommand(value)
-
-  if (rt)
-    cmd.value = ''// ! 置空
+  if (editor.value.callCommand(value))
+    emit('command', value)// ! 置空触发变化
 })
 
 const content = defineModel('content', { default: '' })
