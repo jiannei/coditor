@@ -1,5 +1,5 @@
 <script setup>
-const { toolbar } = defineProps({
+defineProps({
   toolbar: {
     type: Array,
     required: true,
