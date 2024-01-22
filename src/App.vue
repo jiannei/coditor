@@ -58,7 +58,7 @@ const plugins = ref([
         uploader: remoteUploader(ctx),
         uploadWidgetFactory: (pos, spec) => {
           const widgetDOM = document.createElement('span')
-          widgetDOM.classList.add(...['w-4', 'h-4', 'inline-block', 'i-tabler:loader', 'text-slate-500 dark:text-slate-400', 'animate-spin'])
+          widgetDOM.classList.add(...['w-4', 'h-4', 'inline-block', 'i-tabler:loader', 'text-slate-500', 'dark:text-slate-400', 'animate-spin'])
 
           return Decoration.widget(pos, widgetDOM, spec)
         },
@@ -69,29 +69,17 @@ const plugins = ref([
 const content = ref('')
 
 const toolbar = ref([
-  { icon: 'bold', name: 'bold', command: 'ToggleStrong' },
-  { icon: 'italic', name: 'italic', command: 'ToggleEmphasis' },
-  {
-    icon: 'strikethrough',
-    name: 'strikethrough',
-    command: 'ToggleStrikeThrough',
-  },
-  { icon: 'braces', name: 'inline-code', command: 'ToggleInlineCode' },
-  { icon: 'code', name: 'code', command: 'CreateCodeBlock' },
-  {
-    icon: 'quote',
-    name: 'quote',
-    command: 'WrapInBlockquote',
-  },
-  { icon: 'separator', name: 'hr', command: 'InsertHr' },
-  { icon: 'text-wrap', name: 'text-wrap', command: 'InsertHardbreak' },
-  {
-    icon: 'photo',
-    name: 'image',
-    command: 'RemoteUpload',
-  },
-  { icon: 'arrow-back-up', name: 'undo', command: 'Undo' },
-  { icon: 'arrow-forward-up', name: 'redo', command: 'Redo' },
+  { icon: 'bold', command: 'ToggleStrong' },
+  { icon: 'italic', command: 'ToggleEmphasis' },
+  { icon: 'strikethrough', command: 'ToggleStrikeThrough' },
+  { icon: 'braces', command: 'ToggleInlineCode' },
+  { icon: 'code', command: 'CreateCodeBlock' },
+  { icon: 'quote', command: 'WrapInBlockquote' },
+  { icon: 'separator', command: 'InsertHr' },
+  { icon: 'text-wrap', command: 'InsertHardbreak' },
+  { icon: 'photo', command: 'RemoteUpload' },
+  { icon: 'arrow-back-up', command: 'Undo' },
+  { icon: 'arrow-forward-up', command: 'Redo' },
 ])
 
 let callback = null
@@ -118,7 +106,7 @@ function call(command, callCommand) {
       <CoditorContainer class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-300 hover:dark:border-slate-600 rounded-md shadow-sm">
         <CoditorToolbar :toolbar="toolbar" class="w-full bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-t-md flex items-center space-x-1">
           <CoditorToolbarItem v-for="(item, key) in toolbar" :key="key" :command="item.command" class="px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer" @call="call">
-            <button type="button" :class="[`i-tabler:${item.icon}`, item.class]" class="w-4 h-4" />
+            <button type="button" :class="[`i-tabler:${item.icon}`]" class="w-4 h-4" />
           </CoditorToolbarItem>
         </CoditorToolbar>
 
