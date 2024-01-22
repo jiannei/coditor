@@ -17,10 +17,14 @@ import { useFileDialog } from '@vueuse/core'
 import { remoteUpload, remoteUploader } from '@s2nc/milkdown-plugin-upload'
 import { Decoration } from '@milkdown/prose/view'
 import { uploadConfig } from '@milkdown/plugin-upload'
+import { headingIdGenerator } from '@milkdown/preset-commonmark'
+import { nanoid } from '@milkdown/utils'
 import Coditor from './components/Coditor.vue'
 import CoditorContainer from './components/CoditorContainer.vue'
 import CoditorToolbarItem from './components/CoditorToolbarItem.vue'
 import CoditorToolbar from './components/CoditorToolbar.vue'
+
+const headings = []
 
 const plugins = ref([
   // 编辑器配置
@@ -33,6 +37,24 @@ const plugins = ref([
             class: 'min-h-[24rem] max-w-none prose prose-slate dark:prose-invert outline-none',
           },
         }
+      })
+    },
+  },
+  {
+    config: (ctx) => {
+      ctx.set(headingIdGenerator.key, (node) => {
+        let id = node.attrs.id
+
+        if (!id)
+          id = nanoid()
+
+        headings.push({
+          text: node.textContent,
+          level: node.attrs.level,
+          id,
+        })
+
+        return id
       })
     },
   },
