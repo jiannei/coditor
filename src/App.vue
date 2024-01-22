@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-import CoditorContainer from './components/CoditorContainer.vue'
 
 import 'prosemirror-view/style/prosemirror.css'
 import 'prosemirror-tables/style/tables.css'
@@ -19,6 +18,7 @@ import { remoteUpload, remoteUploader } from '@s2nc/milkdown-plugin-upload'
 import { Decoration } from 'prosemirror-view'
 import { uploadConfig } from '@milkdown/plugin-upload'
 import Coditor from './components/Coditor.vue'
+import CoditorContainer from './components/CoditorContainer.vue'
 
 const plugins = ref([
   // 编辑器配置
@@ -92,21 +92,11 @@ const toolbar = ref([
   { icon: 'arrow-forward-up', name: 'redo', command: 'Redo' },
 ])
 
-let callback = () => {}
+const callback = ref()
 
 const { open, onChange } = useFileDialog({ accept: 'image/*' })
 
-onChange(files => callback('RemoteUpload', files))
-
-function callCommand(cmd, call) {
-  if (cmd === 'RemoteUpload') {
-    open()
-    callback = call
-    return
-  }
-
-  call(cmd)
-}
+onChange(files => callback.value('RemoteUpload', files))
 </script>
 
 <template>
@@ -116,7 +106,11 @@ function callCommand(cmd, call) {
         <div v-if="toolbar.length" class="w-full bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-t-md">
           <ul class="flex items-center space-x-1">
             <li v-for="(item, key) in toolbar" :key="key">
-              <button type="button" class="bg-transparent px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer" @mousedown.prevent="callCommand(item.command, call)">
+              <button
+                type="button" class="bg-transparent px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer"
+                @mouseup="item.command !== 'RemoteUpload' ? callback(item.command) : open()"
+                @mousedown.prevent="callback = call"
+              >
                 <span :class="[`i-tabler:${item.icon}`, item.class]" class="inline-block w-4 h-4" />
               </button>
             </li>
