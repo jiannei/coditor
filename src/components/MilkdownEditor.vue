@@ -21,11 +21,9 @@ const { loading, get } = useEditor((root) => {
 
 function callCommand(cmd, payload) {
   if (loading.value)
-    return
+    return false
 
-  get().action(ctx =>
-    ctx.get(commandsCtx).call(cmd, payload),
-  )
+  return get().action(ctx => ctx.get(commandsCtx).call(cmd, payload))
 }
 
 defineExpose({ callCommand })

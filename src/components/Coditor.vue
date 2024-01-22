@@ -20,12 +20,18 @@ const { readonly, plugins } = defineProps({
 
 const editor = ref()
 
-// 监听 cmd 变化
-watch(inject('cmd'), value => callCommand(value))
+const cmd = inject('cmd')
 
-function callCommand(cmd, payload) {
-  editor.value.callCommand(cmd, payload)
-}
+// 监听 cmd 变化
+watch(cmd, (value) => {
+  if (!value)
+    return
+
+  const rt = editor.value.callCommand(value)
+
+  if (rt)
+    cmd.value = ''// ! 置空
+})
 
 const content = defineModel('content', { default: '' })
 
