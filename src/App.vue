@@ -15,6 +15,9 @@ import { emoji } from '@milkdown/plugin-emoji'
 import { shiki, shikiConfig } from '@s2nc/milkdown-plugin-shiki'
 import { placeholder, placeholderConfig } from '@s2nc/milkdown-plugin-placeholder'
 import { useFileDialog } from '@vueuse/core'
+import { remoteUpload, remoteUploader } from '@s2nc/milkdown-plugin-upload'
+import { Decoration } from 'prosemirror-view'
+import { uploadConfig } from '@milkdown/plugin-upload'
 import Coditor from './components/Coditor.vue'
 
 const plugins = ref([
@@ -46,6 +49,20 @@ const plugins = ref([
       dark: false,
     }),
   },
+  { plugin: remoteUpload, config: (ctx) => {
+    ctx.update(uploadConfig.key, (prev) => {
+      return {
+        ...prev,
+        uploader: remoteUploader(ctx),
+        uploadWidgetFactory: (pos, spec) => {
+          const widgetDOM = document.createElement('span')
+          widgetDOM.classList.add(...['w-4', 'h-4', 'inline-block', 'i-tabler:loader', 'text-slate-500 dark:text-slate-400', 'animate-spin'])
+
+          return Decoration.widget(pos, widgetDOM, spec)
+        },
+      }
+    })
+  } },
 ])
 const content = ref('')
 
@@ -75,24 +92,38 @@ const toolbar = ref([
   { icon: 'arrow-forward-up', name: 'redo', command: 'Redo' },
 ])
 
+let callback = () => {}
+
 const { open, onChange } = useFileDialog({ accept: 'image/*' })
 
-// onChange(files => call('RemoteUpload', files))
+onChange(files => callback('RemoteUpload', files))
+
+function callCommand(cmd, call) {
+  if (cmd === 'RemoteUpload') {
+    open()
+    callback = call
+    return
+  }
+
+  call(cmd)
+}
 </script>
 
 <template>
-  <div class="h-dvh flex items-center justify-center">
+  <div class="h-dvh flex items-center justify-center bg-stone-100 dark:bg-slate-800">
     <div class="max-w-6xl mx-auto w-full">
-      <CoditorContainer v-slot="{ call }" class="border border-slate-200 dark:border-slate-700 hover:border-slate-300 hover:dark:border-slate-600 rounded-md">
+      <CoditorContainer v-slot="{ call }" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-300 hover:dark:border-slate-600 rounded-md shadow-sm">
         <div v-if="toolbar.length" class="w-full bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-t-md">
           <ul class="flex items-center space-x-1">
-            <li v-for="(item, key) in toolbar" :key="key" class="px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer" @mousedown.prevent="call(item.command)">
-              <button type="button" :class="[`i-tabler:${item.icon}`, item.class]" class="w-4 h-4" />
+            <li v-for="(item, key) in toolbar" :key="key">
+              <button type="button" class="bg-transparent px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer" @mousedown.prevent="callCommand(item.command, call)">
+                <span :class="[`i-tabler:${item.icon}`, item.class]" class="inline-block w-4 h-4" />
+              </button>
             </li>
           </ul>
         </div>
 
-        <Coditor v-model:content="content" :plugins="plugins" @command="call()" />
+        <Coditor v-model:content="content" :plugins="plugins" />
       </CoditorContainer>
     </div>
   </div>

@@ -1,12 +1,12 @@
 <script setup>
 import { provide, ref } from 'vue'
 
-const cmd = ref('')
-function call(command) {
-  cmd.value = command
+const command = ref('')
+function call(cmd, payload) {
+  command.value = { command: cmd, payload }
 }
 
-provide('cmd', cmd)
+provide('command', command)
 </script>
 
 <template>

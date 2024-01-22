@@ -18,19 +18,13 @@ const { readonly, plugins } = defineProps({
   },
 })
 
-const emit = defineEmits(['command'])
-
 const editor = ref()
 
-const cmd = inject('cmd')
-
 // 监听 cmd 变化
-watch(cmd, (value) => {
-  if (!value)
-    return
+watch(inject('command'), (value) => {
+  const { command, payload } = value
 
-  if (editor.value.callCommand(value))
-    emit('command', value)// ! 置空触发变化
+  editor.value.callCommand(command, payload)
 })
 
 const content = defineModel('content', { default: '' })
