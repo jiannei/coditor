@@ -5,7 +5,7 @@ import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
 import { listenerCtx } from '@milkdown/plugin-listener'
 import MilkdownEditor from './MilkdownEditor.vue'
 
-const { readonly, plugins } = defineProps({
+const { readonly, plugins, format } = defineProps({
   plugins: {
     type: Array,
     default: () => [],
@@ -13,6 +13,10 @@ const { readonly, plugins } = defineProps({
   readonly: {
     type: Boolean,
     default: false,
+  },
+  format: {
+    type: String,
+    default: 'markdown',
   },
 })
 
@@ -36,9 +40,16 @@ const configs = computed(() => [{
     ctx.set(defaultValueCtx, content.value)
 
     // 内容监听
-    ctx.get(listenerCtx).markdownUpdated((ctx, markdown) => {
-      content.value = markdown
-    })
+    if (format === 'json') {
+      ctx.get(listenerCtx).markdownUpdated((ctx, markdown) => {
+        content.value = markdown
+      })
+    }
+    else {
+      ctx.get(listenerCtx).updated((ctx, doc) => {
+        content.value = doc.toJSON()
+      })
+    }
   },
 }, ...plugins])
 </script>
