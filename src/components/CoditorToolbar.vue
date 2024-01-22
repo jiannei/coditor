@@ -1,14 +1,18 @@
 <script setup>
-defineProps({
+const { toolbar } = defineProps({
   toolbar: {
     type: Array,
     required: true,
+  },
+  as: {
+    type: String,
+    default: 'ul',
   },
 })
 </script>
 
 <template>
-  <div v-if="toolbar?.length">
+  <component :is="as" v-if="toolbar?.length">
     <slot />
-  </div>
+  </component>
 </template>

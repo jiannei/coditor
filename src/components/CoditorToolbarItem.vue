@@ -6,6 +6,10 @@ defineProps({
     type: String,
     required: true,
   },
+  as: {
+    type: String,
+    default: 'li',
+  },
 })
 const emit = defineEmits(['call'])
 
@@ -15,7 +19,7 @@ const callback = ref()
 </script>
 
 <template>
-  <button type="button" @mouseup="emit('call', command, callback)" @mousedown.prevent="callback = callCommand">
-    <slot :callback="callback" />
-  </button>
+  <component :is="as" @mouseup="emit('call', command, callback)" @mousedown.prevent="callback = callCommand">
+    <slot />
+  </component>
 </template>
