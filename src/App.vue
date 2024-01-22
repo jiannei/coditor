@@ -86,7 +86,7 @@ const { open, onChange } = useFileDialog({ accept: 'image/*' })
       <CoditorContainer v-slot="{ call }" class="border border-slate-200 dark:border-slate-700 hover:border-slate-300 hover:dark:border-slate-600 rounded-md">
         <div v-if="toolbar.length" class="w-full bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-t-md">
           <ul class="flex items-center space-x-1">
-            <li v-for="(item, key) in toolbar" :key="key" class="px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer" @click="call(item.command)">
+            <li v-for="(item, key) in toolbar" :key="key" class="px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer" @mousedown.prevent="call(item.command)">
               <button type="button" :class="[`i-tabler:${item.icon}`, item.class]" class="w-4 h-4" />
             </li>
           </ul>
