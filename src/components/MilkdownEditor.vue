@@ -2,10 +2,14 @@
 import { Milkdown, useEditor } from '@milkdown/vue'
 import { Editor, commandsCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/core'
 
-const { configs, classes } = defineProps({
+const { configs, readonly, classes } = defineProps({
   configs: {
     type: Array,
     default: () => [],
+  },
+  readonly: {
+    type: Boolean,
+    default: false,
   },
   classes: {
     type: String,
@@ -24,6 +28,7 @@ const { loading, get } = useEditor((root) => {
           attributes: {
             class: classes,
           },
+          editable: () => !readonly,
         }
       })
     })

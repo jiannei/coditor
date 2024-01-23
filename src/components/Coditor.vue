@@ -1,7 +1,7 @@
 <script setup>
 import { MilkdownProvider } from '@milkdown/vue'
 import { computed, inject, ref, watch } from 'vue'
-import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
+import { defaultValueCtx } from '@milkdown/core'
 import MilkdownEditor from './MilkdownEditor.vue'
 
 const { readonly, plugins, content } = defineProps({
@@ -31,12 +31,6 @@ watch(inject('command'), ({ command, payload }) => editor.value.callCommand(comm
 // configs = 默认配置 + 传入配置
 const configs = computed(() => [{
   config: (ctx) => {
-    // 编辑模式
-    ctx.update(editorViewOptionsCtx, prev => ({
-      ...prev,
-      editable: () => !readonly,
-    }))
-
     // 默认内容
     ctx.set(defaultValueCtx, content)
   },
@@ -45,6 +39,6 @@ const configs = computed(() => [{
 
 <template>
   <MilkdownProvider>
-    <MilkdownEditor ref="editor" :classes="classes" :configs="configs" />
+    <MilkdownEditor ref="editor" :readonly="readonly" :classes="classes" :configs="configs" />
   </MilkdownProvider>
 </template>

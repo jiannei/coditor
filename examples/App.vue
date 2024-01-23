@@ -126,7 +126,7 @@ function call(command, callCommand) {
           </CoditorToolbarItem>
         </CoditorToolbar>
 
-        <Coditor classes="min-h-[24rem] max-w-none prose prose-slate dark:prose-invert outline-none" :content="content" :plugins="plugins" />
+        <Coditor :readonly="false" classes="min-h-[24rem] max-w-none prose prose-slate dark:prose-invert outline-none" :content="content" :plugins="plugins" />
       </CoditorContainer>
     </div>
   </div>
