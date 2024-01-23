@@ -1,6 +1,23 @@
 {
-  "name": "cowditor",
-  "version": "0.0.0",
+  "name": "@s2nc/coditor",
+  "version": "0.1.0",
+  "description": "a markdown editor based on milkdown.",
+  "keywords": [
+    "milkdown",
+    "markdown",
+    "editor",
+    "milkdown editor"
+  ],
+  "author": "jiannei",
+  "license": "MIT",
+  "main": "./dist/coditor.umd.js",
+  "module": "./dist/coditor.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/coditor.es.js",
+      "require": "./dist/coditor.umd.js"
+    }
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
