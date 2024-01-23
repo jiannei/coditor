@@ -1,8 +1,10 @@
 <script setup>
 import { Milkdown, useEditor } from '@milkdown/vue'
-import { Editor, commandsCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/core'
+import { Editor, commandsCtx, defaultValueCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/core'
+import 'prosemirror-view/style/prosemirror.css'
+import 'prosemirror-tables/style/tables.css'
 
-const { configs, readonly, classes } = defineProps({
+const { configs, readonly, classes, content } = defineProps({
   configs: {
     type: Array,
     default: () => [],
@@ -15,12 +17,18 @@ const { configs, readonly, classes } = defineProps({
     type: String,
     default: '',
   },
+  content: {
+    type: String,
+    default: '',
+  },
 })
 
 const { loading, get } = useEditor((root) => {
   return Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, root)
+
+      ctx.set(defaultValueCtx, content)
 
       ctx.update(editorViewOptionsCtx, (prev) => {
         return {

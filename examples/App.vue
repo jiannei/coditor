@@ -1,8 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-
-import 'prosemirror-view/style/prosemirror.css'
-import 'prosemirror-tables/style/tables.css'
 import './assets/css/editor.css'
 
 import { clipboard } from '@milkdown/plugin-clipboard'
