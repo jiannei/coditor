@@ -15,14 +15,11 @@ export default defineConfig({
     },
     rollupOptions: {
       // https://rollupjs.org/configuration-options/
-      external: ['vue', '@vueuse/core', '@milkdown/vue', '@milkdown/core'],
+      external: ['vue'],
       output: {
         exports: 'named', // https://rollupjs.org/configuration-options/#output-exports
         globals: {
-          'vue': 'Vue',
-          '@vueuse/core': 'Core',
-          '@milkdown/vue': 'MilkdownEditor',
-          '@milkdown/core': 'Milkdown',
+          vue: 'Vue',
         },
       },
     },
