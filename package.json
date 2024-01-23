@@ -1,6 +1,6 @@
 {
   "name": "@s2nc/coditor",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "a markdown editor based on milkdown.",
   "keywords": [
     "milkdown",
@@ -24,7 +24,8 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix"
+    "lint:fix": "eslint ./src --fix",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@milkdown/core": "^7.3.3",

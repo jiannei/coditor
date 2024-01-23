@@ -1,0 +1,17 @@
+# 忽略目录
+.DS_Store
+.vscode/
+node_modules
+src/
+examples/
+
+# 忽略指定文件
+.gitignore
+.npmignore
+bun.lockb
+eslint.config.js
+index.html
+tsconfig.json
+tsconfig.node.json
+uno.config.ts
+vite.config.ts
