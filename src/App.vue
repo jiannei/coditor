@@ -24,7 +24,7 @@ import CoditorContainer from './components/CoditorContainer.vue'
 import CoditorToolbarItem from './components/CoditorToolbarItem.vue'
 import CoditorToolbar from './components/CoditorToolbar.vue'
 
-const headings = []
+const headings = ref([])
 
 const plugins = ref([
   // 编辑器配置
@@ -48,7 +48,7 @@ const plugins = ref([
         if (!id)
           id = nanoid()
 
-        headings.push({
+        headings.value.push({
           text: node.textContent,
           level: node.attrs.level,
           id,
