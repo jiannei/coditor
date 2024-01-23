@@ -2,21 +2,20 @@
 import { MilkdownProvider } from '@milkdown/vue'
 import { computed, inject, ref, watch } from 'vue'
 import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
-import { listenerCtx } from '@milkdown/plugin-listener'
 import MilkdownEditor from './MilkdownEditor.vue'
 
-const { readonly, plugins, format } = defineProps({
+const { readonly, plugins, content } = defineProps({
   plugins: {
     type: Array,
     default: () => [],
   },
+  content: {
+    type: String,
+    default: '',
+  },
   readonly: {
     type: Boolean,
     default: false,
-  },
-  format: {
-    type: String,
-    default: 'markdown',
   },
 })
 
@@ -24,8 +23,6 @@ const editor = ref()
 
 // 监听 cmd 变化
 watch(inject('command'), ({ command, payload }) => editor.value.callCommand(command, payload))
-
-const content = defineModel('content', { default: '' })
 
 // configs = 默认配置 + 传入配置
 const configs = computed(() => [{
@@ -37,19 +34,7 @@ const configs = computed(() => [{
     }))
 
     // 默认内容
-    ctx.set(defaultValueCtx, content.value)
-
-    // 内容监听
-    if (format === 'json') {
-      ctx.get(listenerCtx).markdownUpdated((ctx, markdown) => {
-        content.value = markdown
-      })
-    }
-    else {
-      ctx.get(listenerCtx).updated((ctx, doc) => {
-        content.value = doc.toJSON()
-      })
-    }
+    ctx.set(defaultValueCtx, content)
   },
 }, ...plugins])
 </script>

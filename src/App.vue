@@ -19,15 +19,16 @@ import { Decoration } from '@milkdown/prose/view'
 import { uploadConfig } from '@milkdown/plugin-upload'
 import { headingIdGenerator } from '@milkdown/preset-commonmark'
 import { nanoid } from '@milkdown/utils'
+import { listenerCtx } from '@milkdown/plugin-listener'
 import Coditor from './components/Coditor.vue'
 import CoditorContainer from './components/CoditorContainer.vue'
 import CoditorToolbarItem from './components/CoditorToolbarItem.vue'
 import CoditorToolbar from './components/CoditorToolbar.vue'
 
 const headings = ref([])
+const content = defineModel('content', { default: '' })
 
 const plugins = ref([
-  // 编辑器配置
   {
     config: (ctx) => { // 主题
       ctx.update(editorViewOptionsCtx, (prev) => {
@@ -41,7 +42,7 @@ const plugins = ref([
     },
   },
   {
-    config: (ctx) => {
+    config: (ctx) => { // heading
       ctx.set(headingIdGenerator.key, (node) => {
         let id = node.attrs.id
 
@@ -55,6 +56,14 @@ const plugins = ref([
         })
 
         return id
+      })
+    },
+  },
+  {
+    config: (ctx) => {
+      // 内容监听
+      ctx.get(listenerCtx).markdownUpdated((ctx, markdown) => {
+        content.value = markdown
       })
     },
   },
@@ -88,7 +97,6 @@ const plugins = ref([
     })
   } },
 ])
-const content = ref('')
 
 const toolbar = ref([
   { icon: 'bold', command: 'ToggleStrong' },
@@ -132,7 +140,7 @@ function call(command, callCommand) {
           </CoditorToolbarItem>
         </CoditorToolbar>
 
-        <Coditor v-model:content="content" :plugins="plugins" />
+        <Coditor :content="content" :plugins="plugins" />
       </CoditorContainer>
     </div>
   </div>
