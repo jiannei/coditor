@@ -135,7 +135,7 @@ function call(command, callCommand) {
     <div class="max-w-6xl mx-auto w-full">
       <CoditorContainer class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-300 hover:dark:border-slate-600 rounded-md shadow-sm">
         <CoditorToolbar :toolbar="toolbar" class="w-full bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-t-md flex items-center space-x-1">
-          <CoditorToolbarItem v-for="(item, key) in toolbar" :key="key" :command="item.command" class="px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer" @call="call">
+          <CoditorToolbarItem v-for="(item, key) in toolbar" :key="key" :command="item.command" class="px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer" @click="call">
             <button type="button" :class="[`i-tabler:${item.icon}`]" class="w-4 h-4" />
           </CoditorToolbarItem>
         </CoditorToolbar>

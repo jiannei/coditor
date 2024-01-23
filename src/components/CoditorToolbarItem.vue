@@ -11,13 +11,13 @@ defineProps({
     default: 'li',
   },
 })
-const emit = defineEmits(['call'])
+const emit = defineEmits(['click'])
 
 const callCommand = inject('callCommand')
 </script>
 
 <template>
-  <component :is="as" @mouseup="emit('call', command, callCommand)" @mousedown.prevent>
+  <component :is="as" @mouseup="emit('click', command, callCommand)" @mousedown.prevent>
     <slot />
   </component>
 </template>
