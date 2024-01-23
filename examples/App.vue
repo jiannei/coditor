@@ -51,7 +51,7 @@ const plugins = ref([
           attributes: {
             class: 'min-h-[24rem] max-w-none prose prose-slate dark:prose-invert outline-none',
           },
-          editable: () => false,
+          editable: () => true,
         }
       })
 
