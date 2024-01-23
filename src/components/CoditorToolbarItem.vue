@@ -1,5 +1,5 @@
 <script setup>
-import { inject, ref } from 'vue'
+import { inject } from 'vue'
 
 defineProps({
   command: {
@@ -14,12 +14,10 @@ defineProps({
 const emit = defineEmits(['call'])
 
 const callCommand = inject('callCommand')
-
-const callback = ref()
 </script>
 
 <template>
-  <component :is="as" @mouseup="emit('call', command, callback)" @mousedown.prevent="callback = callCommand">
+  <component :is="as" @mouseup="emit('call', command, callCommand)" @mousedown.prevent>
     <slot />
   </component>
 </template>
