@@ -15,11 +15,14 @@ export default defineConfig({
     },
     rollupOptions: {
       // https://rollupjs.org/configuration-options/
-      external: ['vue'],
+      external: ['vue', '@milkdown/vue', '@milkdown/core', '@milkdown/preset-commonmark'],
       output: {
         exports: 'named', // https://rollupjs.org/configuration-options/#output-exports
         globals: {
-          vue: 'Vue',
+          'vue': 'Vue',
+          '@milkdown/vue': 'Milkdown',
+          '@milkdown/core': 'MilkdownCore',
+          '@milkdown/preset-commonmark': 'MilkdownCommonmark',
         },
       },
     },

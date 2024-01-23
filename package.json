@@ -30,6 +30,7 @@
   "dependencies": {
     "@milkdown/core": "^7.3.3",
     "@milkdown/vue": "^7.3.3",
+    "@milkdown/preset-commonmark": "^7.3.3",
     "vue": "^3.4.15"
   },
   "devDependencies": {
