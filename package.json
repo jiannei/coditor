@@ -12,6 +12,11 @@
   },
   "dependencies": {
     "@milkdown/core": "^7.3.3",
+    "@milkdown/vue": "^7.3.3"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.6.3",
+    "@iconify-json/tabler": "^1.1.104",
     "@milkdown/plugin-clipboard": "^7.3.3",
     "@milkdown/plugin-emoji": "^7.3.3",
     "@milkdown/plugin-history": "^7.3.3",
@@ -22,24 +27,17 @@
     "@milkdown/preset-gfm": "^7.3.3",
     "@milkdown/prose": "^7.3.3",
     "@milkdown/utils": "^7.3.3",
-    "@milkdown/vue": "^7.3.3",
     "@s2nc/milkdown-plugin-placeholder": "^0.2.1",
     "@s2nc/milkdown-plugin-shiki": "^0.3.0",
     "@s2nc/milkdown-plugin-upload": "^0.2.1",
+    "@vitejs/plugin-vue": "^5.0.3",
     "@vueuse/core": "^10.7.2",
     "@vueuse/integrations": "^10.7.2",
-    "js-base64": "^3.7.6",
-    "vue": "^3.4.15"
-  },
-  "devDependencies": {
-    "@antfu/eslint-config": "^2.6.3",
-    "@iconify-json/tabler": "^1.1.104",
-    "@milkdown/theme-nord": "^7.3.3",
-    "@vitejs/plugin-vue": "^5.0.3",
     "eslint": "^8.56.0",
     "typescript": "^5.3.3",
     "unocss": "^0.58.3",
     "vite": "^5.0.12",
+    "vue": "^3.4.15",
     "vue-tsc": "^1.8.27"
   }
 }
