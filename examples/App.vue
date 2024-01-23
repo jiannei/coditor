@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from 'vue'
+import 'prosemirror-view/style/prosemirror.css'
+import 'prosemirror-tables/style/tables.css'
 import './assets/css/editor.css'
 
 import { clipboard } from '@milkdown/plugin-clipboard'
@@ -13,9 +15,10 @@ import { useFileDialog } from '@vueuse/core'
 import { remoteUpload, remoteUploader } from '@s2nc/milkdown-plugin-upload'
 import { Decoration } from '@milkdown/prose/view'
 import { uploadConfig } from '@milkdown/plugin-upload'
-import { commonmark, headingIdGenerator } from '@milkdown/preset-commonmark'
+import { headingIdGenerator } from '@milkdown/preset-commonmark'
 import { nanoid } from '@milkdown/utils'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
+import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
 import { Coditor, CoditorContainer, CoditorToolbar, CoditorToolbarItem } from '@/index'
 
 const headings = ref([])
@@ -42,6 +45,18 @@ const plugins = ref([
   },
   {
     config: (ctx) => {
+      ctx.update(editorViewOptionsCtx, (prev) => {
+        return {
+          ...prev,
+          attributes: {
+            class: 'min-h-[24rem] max-w-none prose prose-slate dark:prose-invert outline-none',
+          },
+          editable: () => false,
+        }
+      })
+
+      ctx.set(defaultValueCtx, content.value)
+
       // 内容监听
       ctx.get(listenerCtx).markdownUpdated((ctx, markdown) => {
         content.value = markdown
@@ -49,7 +64,6 @@ const plugins = ref([
     },
   },
   // 插件配置
-  { plugin: commonmark }, // 只读模式不需要
   { plugin: listener }, // 只读模式不需要
   { plugin: clipboard }, // 只读模式不需要
   { plugin: placeholder, config: ctx => ctx.set(placeholderConfig.key, '开始分享你的故事～') },
@@ -123,7 +137,7 @@ function call(command, callCommand) {
           </CoditorToolbarItem>
         </CoditorToolbar>
 
-        <Coditor :readonly="false" classes="min-h-[24rem] max-w-none prose prose-slate dark:prose-invert outline-none" :content="content" :plugins="plugins" />
+        <Coditor :plugins="plugins" />
       </CoditorContainer>
     </div>
   </div>

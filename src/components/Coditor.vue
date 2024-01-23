@@ -8,18 +8,6 @@ defineProps({
     type: Array,
     default: () => [],
   },
-  content: {
-    type: String,
-    default: '',
-  },
-  readonly: {
-    type: Boolean,
-    default: false,
-  },
-  classes: {
-    type: String,
-    default: '',
-  },
 })
 
 const editor = ref()
@@ -30,6 +18,6 @@ watch(inject('command'), ({ command, payload }) => editor.value.callCommand(comm
 
 <template>
   <MilkdownProvider>
-    <MilkdownEditor ref="editor" :readonly="readonly" :content="content" :classes="classes" :configs="plugins" />
+    <MilkdownEditor ref="editor" :plugins="plugins" />
   </MilkdownProvider>
 </template>

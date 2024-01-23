@@ -1,25 +1,12 @@
 <script setup>
 import { Milkdown, useEditor } from '@milkdown/vue'
-import { Editor, commandsCtx, defaultValueCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/core'
-import 'prosemirror-view/style/prosemirror.css'
-import 'prosemirror-tables/style/tables.css'
+import { Editor, commandsCtx, rootCtx } from '@milkdown/core'
+import { commonmark } from '@milkdown/preset-commonmark'
 
-const { configs, readonly, classes, content } = defineProps({
-  configs: {
+const { plugins } = defineProps({
+  plugins: {
     type: Array,
     default: () => [],
-  },
-  readonly: {
-    type: Boolean,
-    default: false,
-  },
-  classes: {
-    type: String,
-    default: '',
-  },
-  content: {
-    type: String,
-    default: '',
   },
 })
 
@@ -27,21 +14,10 @@ const { loading, get } = useEditor((root) => {
   return Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, root)
-
-      ctx.set(defaultValueCtx, content)
-
-      ctx.update(editorViewOptionsCtx, (prev) => {
-        return {
-          ...prev,
-          attributes: {
-            class: classes,
-          },
-          editable: () => !readonly,
-        }
-      })
     })
-    .config(ctx => configs.map(item => item.config).filter(item => item).forEach(item => item(ctx)))
-    .use(configs.map(item => item.plugin).filter(item => item))
+    .config(ctx => plugins.map(item => item.config).filter(item => item).forEach(item => item(ctx)))
+    .use(commonmark)
+    .use(plugins.map(item => item.plugin).filter(item => item))
 })
 
 function callCommand(cmd, payload) {
