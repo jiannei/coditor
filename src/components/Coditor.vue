@@ -3,7 +3,7 @@ import { MilkdownProvider } from '@milkdown/vue'
 import { inject, ref, watch } from 'vue'
 import MilkdownEditor from './MilkdownEditor.vue'
 
-const { readonly, plugins, content } = defineProps({
+defineProps({
   plugins: {
     type: Array,
     default: () => [],
