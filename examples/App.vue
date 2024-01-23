@@ -20,7 +20,7 @@ import { uploadConfig } from '@milkdown/plugin-upload'
 import { commonmark, headingIdGenerator } from '@milkdown/preset-commonmark'
 import { nanoid } from '@milkdown/utils'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
-import { Coditor, CoditorContainer, CoditorToolbar, CoditorToolbarItem } from '../packages'
+import { Coditor, CoditorContainer, CoditorToolbar, CoditorToolbarItem } from '@/index'
 
 const headings = ref([])
 const content = defineModel('content', { default: '' })
