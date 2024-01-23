@@ -5,7 +5,6 @@ import 'prosemirror-view/style/prosemirror.css'
 import 'prosemirror-tables/style/tables.css'
 import './assets/css/editor.css'
 
-import { editorViewOptionsCtx } from '@milkdown/core'
 import { clipboard } from '@milkdown/plugin-clipboard'
 import { history } from '@milkdown/plugin-history'
 import { gfm } from '@milkdown/preset-gfm'
@@ -26,18 +25,6 @@ const headings = ref([])
 const content = defineModel('content', { default: '' })
 
 const plugins = ref([
-  {
-    config: (ctx) => { // 主题
-      ctx.update(editorViewOptionsCtx, (prev) => {
-        return {
-          ...prev,
-          attributes: {
-            class: 'min-h-[24rem] max-w-none prose prose-slate dark:prose-invert outline-none',
-          },
-        }
-      })
-    },
-  },
   {
     config: (ctx) => { // heading
       ctx.set(headingIdGenerator.key, (node) => {
@@ -139,7 +126,7 @@ function call(command, callCommand) {
           </CoditorToolbarItem>
         </CoditorToolbar>
 
-        <Coditor :content="content" :plugins="plugins" />
+        <Coditor classes="min-h-[24rem] max-w-none prose prose-slate dark:prose-invert outline-none" :content="content" :plugins="plugins" />
       </CoditorContainer>
     </div>
   </div>

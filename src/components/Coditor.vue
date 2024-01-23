@@ -17,6 +17,10 @@ const { readonly, plugins, content } = defineProps({
     type: Boolean,
     default: false,
   },
+  classes: {
+    type: String,
+    default: '',
+  },
 })
 
 const editor = ref()
@@ -41,6 +45,6 @@ const configs = computed(() => [{
 
 <template>
   <MilkdownProvider>
-    <MilkdownEditor ref="editor" :configs="configs" />
+    <MilkdownEditor ref="editor" :classes="classes" :configs="configs" />
   </MilkdownProvider>
 </template>
