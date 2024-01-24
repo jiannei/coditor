@@ -27,7 +27,7 @@ function callCommand(cmd, payload) {
   return get().action(ctx => ctx.get(commandsCtx).call(cmd, payload))
 }
 
-defineExpose({ callCommand })
+defineExpose({ callCommand, get })
 </script>
 
 <template>

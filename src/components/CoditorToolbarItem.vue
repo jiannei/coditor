@@ -1,6 +1,4 @@
 <script setup>
-import { inject } from 'vue'
-
 defineProps({
   command: {
     type: String,
@@ -12,12 +10,10 @@ defineProps({
   },
 })
 const emit = defineEmits(['click'])
-
-const callCommand = inject('callCommand')
 </script>
 
 <template>
-  <component :is="as" @mouseup="emit('click', command, callCommand)" @mousedown.prevent>
+  <component :is="as" @mouseup="emit('click', command)" @mousedown.prevent>
     <slot />
   </component>
 </template>

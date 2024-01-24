@@ -1,6 +1,6 @@
 <script setup>
 import { MilkdownProvider } from '@milkdown/vue'
-import { inject, ref, watch } from 'vue'
+import { ref } from 'vue'
 import MilkdownEditor from './MilkdownEditor.vue'
 
 defineProps({
@@ -10,14 +10,17 @@ defineProps({
   },
 })
 
-const editor = ref()
+const editorRef = ref()
 
-// 监听 cmd 变化
-watch(inject('command'), ({ command, payload }) => editor.value.callCommand(command, payload))
+function get() {
+  return editorRef.value.get()
+}
+
+defineExpose({ get })
 </script>
 
 <template>
   <MilkdownProvider>
-    <MilkdownEditor ref="editor" :plugins="plugins" />
+    <MilkdownEditor ref="editorRef" :plugins="plugins" />
   </MilkdownProvider>
 </template>

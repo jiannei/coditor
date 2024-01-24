@@ -18,7 +18,7 @@ import { uploadConfig } from '@milkdown/plugin-upload'
 import { headingIdGenerator } from '@milkdown/preset-commonmark'
 import { nanoid } from '@milkdown/utils'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
-import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
+import { commandsCtx, defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
 import { Coditor, CoditorContainer, CoditorToolbar, CoditorToolbarItem } from '@/index'
 
 const headings = ref([])
@@ -109,21 +109,19 @@ const toolbar = ref([
   { icon: 'arrow-forward-up', command: 'Redo' },
 ])
 
-let callback = null
-
 const { open, onChange } = useFileDialog({ accept: 'image/*' })
 
-onChange(files => callback('RemoteUpload', files))
+onChange(files => call('RemoteUpload', files))
 
-function call(command, callCommand) {
-  callback = callCommand
+const editor = ref()
 
-  if (command === 'RemoteUpload') {
+function call(command, payload) {
+  if (command === 'RemoteUpload' && !payload) {
     open()
     return
   }
 
-  callCommand(command)
+  editor.value.get().action(ctx => ctx.get(commandsCtx).call(command, payload))
 }
 </script>
 
@@ -137,7 +135,7 @@ function call(command, callCommand) {
           </CoditorToolbarItem>
         </CoditorToolbar>
 
-        <Coditor :plugins="plugins" />
+        <Coditor ref="editor" :plugins="plugins" />
       </CoditorContainer>
     </div>
   </div>
