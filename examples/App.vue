@@ -18,12 +18,13 @@ import { commonmark, headingIdGenerator } from '@milkdown/preset-commonmark'
 import { nanoid } from '@milkdown/utils'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
-import { Coditor, useGetEditor } from '@'
+import { placeholder, placeholderConfig } from '@s2nc/milkdown-plugin-placeholder'
+import { Coditor } from '@'
 
 const headings = ref([])
 const content = defineModel('content', { default: '' })
 
-const plugins = ref([
+const plugins2 = ref([
   {
     config: (ctx) => { // heading
       ctx.set(headingIdGenerator.key, (node) => {
@@ -66,7 +67,7 @@ const plugins = ref([
   { plugin: commonmark }, // 只读模式不需要
   { plugin: listener }, // 只读模式不需要
   { plugin: clipboard }, // 只读模式不需要
-  // { plugin: placeholder, config: ctx => ctx.set(placeholderConfig.key, '开始分享你的故事～') },
+  { plugin: placeholder, config: ctx => ctx.set(placeholderConfig.key, '开始分享你的故事～') },
   { plugin: gfm },
   { plugin: history },
   { plugin: indent },
@@ -123,6 +124,44 @@ function call(command, payload) {
 
   editor.value.call(command, payload)
 }
+
+const plugins = ref([
+  ctx => ctx.set(placeholderConfig.key, '开始分享你的故事～'),
+  (ctx) => {
+    ctx.update(editorViewOptionsCtx, (prev) => {
+      return {
+        ...prev,
+        attributes: {
+          class: 'min-h-[24rem] max-w-none prose prose-slate dark:prose-invert outline-none',
+        },
+        editable: () => true,
+      }
+    })
+
+    ctx.set(defaultValueCtx, content.value)
+
+    // 内容监听
+    ctx.get(listenerCtx).markdownUpdated((ctx, markdown) => {
+      content.value = markdown
+    })
+  },
+  (ctx) => {
+    ctx.set(headingIdGenerator.key, (node) => {
+      let id = node.attrs.id
+
+      if (!id)
+        id = nanoid()
+
+      headings.value.push({
+        text: node.textContent,
+        level: node.attrs.level,
+        id,
+      })
+
+      return id
+    })
+  },
+])
 </script>
 
 <template>
@@ -140,7 +179,7 @@ function call(command, payload) {
           </li>
         </ul>
 
-        <Coditor ref="editor" :get-editor="useGetEditor(plugins)" />
+        <Coditor ref="editor" :plugins="plugins" />
       </div>
     </div>
   </div>

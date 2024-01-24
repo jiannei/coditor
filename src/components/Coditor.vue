@@ -2,13 +2,12 @@
 import { MilkdownProvider } from '@milkdown/vue'
 import { ref } from 'vue'
 import { commandsCtx } from '@milkdown/core'
-import { placeholder, placeholderConfig } from '@s2nc/milkdown-plugin-placeholder'
 import MilkdownEditor from './MilkdownEditor.vue'
 
 defineProps({
-  getEditor: {
-    type: Function,
-    required: true,
+  plugins: {
+    type: Array,
+    default: () => [],
   },
 })
 
@@ -22,21 +21,15 @@ function call(command, payload) {
   editorRef.value.get().action(ctx => ctx.get(commandsCtx).call(command, payload))
 }
 
-async function loading(val) {
-  if (!val) {
-    const editor = editorRef.value.get()
-    console.log(editor)
-    editorRef.value.get().use(placeholder).config(ctx => ctx.set(placeholderConfig.key, '开始分享你的故事～'))
-
-    await editor.create()
-  }
+function loading() {
+  return editorRef.value.isLoading()
 }
 
-defineExpose({ get, call })
+defineExpose({ get, call, loading })
 </script>
 
 <template>
   <MilkdownProvider>
-    <MilkdownEditor ref="editorRef" :get-editor="getEditor" @loading="loading" />
+    <MilkdownEditor ref="editorRef" :plugins="plugins" />
   </MilkdownProvider>
 </template>
