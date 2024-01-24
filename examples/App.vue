@@ -19,7 +19,8 @@ import { headingIdGenerator } from '@milkdown/preset-commonmark'
 import { nanoid } from '@milkdown/utils'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import { commandsCtx, defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
-import { Coditor, CoditorContainer, CoditorToolbar, CoditorToolbarItem } from '@/index'
+import { MilkdownProvider } from '@milkdown/vue'
+import MilkdownEditor from '@/components/MilkdownEditor.vue'
 
 const headings = ref([])
 const content = defineModel('content', { default: '' })
@@ -128,15 +129,22 @@ function call(command, payload) {
 <template>
   <div class="h-dvh flex items-center justify-center bg-stone-100 dark:bg-slate-800">
     <div class="max-w-6xl mx-auto w-full">
-      <CoditorContainer class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-300 hover:dark:border-slate-600 rounded-md shadow-sm">
-        <CoditorToolbar :toolbar="toolbar" class="w-full bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-t-md flex items-center space-x-1">
-          <CoditorToolbarItem v-for="(item, key) in toolbar" :key="key" :command="item.command" class="px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer" @click="call">
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-300 hover:dark:border-slate-600 rounded-md shadow-sm">
+        <ul v-if="toolbar.length" class="w-full bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-t-md flex items-center space-x-1">
+          <li
+            v-for="(item, key) in toolbar" :key="key"
+            class="px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer"
+            @mousedown.prevent
+            @mouseup="call(item.command)"
+          >
             <button type="button" :class="[`i-tabler:${item.icon}`]" class="w-4 h-4" />
-          </CoditorToolbarItem>
-        </CoditorToolbar>
+          </li>
+        </ul>
 
-        <Coditor ref="editor" :plugins="plugins" />
-      </CoditorContainer>
+        <MilkdownProvider>
+          <MilkdownEditor ref="editor" :plugins="plugins" />
+        </MilkdownProvider>
+      </div>
     </div>
   </div>
 </template>
