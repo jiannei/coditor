@@ -1,6 +1,6 @@
 {
   "name": "@s2nc/milkdown-plugin-upload",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "remote upload plugin for milkdown.",
   "keywords": [
     "milkdown",
@@ -11,7 +11,8 @@
   "author": "jiannei",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jiannei/milkdown-plugin-upload.git"
+    "url": "git+https://github.com/jiannei/coditor.git",
+    "directory": "packages/plugin-upload"
   },
   "license": "MIT",
   "main": "lib/index.js",
@@ -29,7 +30,7 @@
     "@antfu/eslint-config": "^2.6.3",
     "eslint": "^8.56.0",
     "typescript": "^5.3.3",
-    "vite": "^5.0.11"
+    "vite": "^5.0.12"
   },
   "dependencies": {
     "@milkdown/plugin-upload": "^7.3.3",
