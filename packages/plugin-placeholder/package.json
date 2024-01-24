@@ -1,6 +1,6 @@
 {
   "name": "@s2nc/milkdown-plugin-placeholder",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Placeholder plugin for milkdown.",
   "keywords": [
     "milkdown",
@@ -10,11 +10,12 @@
   "author": "jiannei",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jiannei/milkdown-plugin-placeholder.git"
+    "url": "git+https://github.com/jiannei/coditor.git",
+    "directory": "packages/plugin-placeholder"
   },
   "license": "MIT",
   "type": "module",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -28,7 +29,7 @@
     "@antfu/eslint-config": "^2.6.3",
     "eslint": "^8.56.0",
     "typescript": "^5.3.3",
-    "vite": "^5.0.11"
+    "vite": "^5.0.12"
   },
   "dependencies": {
     "@milkdown/utils": "^7.3.3"
