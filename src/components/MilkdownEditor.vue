@@ -1,24 +1,14 @@
 <script setup>
 import { Milkdown, useEditor } from '@milkdown/vue'
-import { Editor, rootCtx } from '@milkdown/core'
-import { commonmark } from '@milkdown/preset-commonmark'
 
-const { plugins } = defineProps({
-  plugins: {
-    type: Array,
-    default: () => [],
+const { getEditor } = defineProps({
+  getEditor: {
+    type: Function,
+    required: true,
   },
 })
 
-const { get } = useEditor((root) => {
-  return Editor.make()
-    .config((ctx) => {
-      ctx.set(rootCtx, root)
-    })
-    .config(ctx => plugins.map(item => item.config).filter(item => item).forEach(item => item(ctx)))
-    .use(commonmark)
-    .use(plugins.map(item => item.plugin).filter(item => item))
-})
+const { get } = useEditor(getEditor)
 
 defineExpose({ get })
 </script>

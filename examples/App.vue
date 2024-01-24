@@ -18,7 +18,7 @@ import { uploadConfig } from '@milkdown/plugin-upload'
 import { headingIdGenerator } from '@milkdown/preset-commonmark'
 import { nanoid } from '@milkdown/utils'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
-import { commandsCtx, defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
+import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
 import { Coditor } from '@'
 
 const headings = ref([])
@@ -121,7 +121,7 @@ function call(command, payload) {
     return
   }
 
-  editor.value.get().action(ctx => ctx.get(commandsCtx).call(command, payload))
+  editor.value.call(command, payload)
 }
 </script>
 
