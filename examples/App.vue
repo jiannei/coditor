@@ -19,7 +19,7 @@ import { headingIdGenerator } from '@milkdown/preset-commonmark'
 import { nanoid } from '@milkdown/utils'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
-import { Coditor } from '@'
+import { Coditor, useGetEditor } from '@'
 
 const headings = ref([])
 const content = defineModel('content', { default: '' })
@@ -140,7 +140,7 @@ function call(command, payload) {
           </li>
         </ul>
 
-        <Coditor ref="editor" :plugins="plugins" />
+        <Coditor ref="editor" :get-editor="useGetEditor(plugins)" />
       </div>
     </div>
   </div>

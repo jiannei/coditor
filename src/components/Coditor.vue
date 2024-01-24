@@ -1,14 +1,13 @@
 <script setup>
 import { MilkdownProvider } from '@milkdown/vue'
 import { ref } from 'vue'
-import { Editor, commandsCtx, rootCtx } from '@milkdown/core'
-import { commonmark } from '@milkdown/preset-commonmark'
+import { commandsCtx } from '@milkdown/core'
 import MilkdownEditor from './MilkdownEditor.vue'
 
-const { plugins } = defineProps({
-  plugins: {
-    type: Array,
-    default: () => [],
+defineProps({
+  getEditor: {
+    type: Function,
+    required: true,
   },
 })
 
@@ -16,14 +15,6 @@ const editorRef = ref()
 
 function get() {
   return editorRef.value.get()
-}
-
-function getEditor(root) {
-  return Editor.make()
-    .config(ctx => ctx.set(rootCtx, root))
-    .config(ctx => plugins.map(item => item.config).filter(item => item).forEach(item => item(ctx)))
-    .use(commonmark)
-    .use(plugins.map(item => item.plugin).filter(item => item))
 }
 
 function call(command, payload) {
