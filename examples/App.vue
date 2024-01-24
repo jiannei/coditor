@@ -10,12 +10,11 @@ import { gfm } from '@milkdown/preset-gfm'
 import { indent } from '@milkdown/plugin-indent'
 import { emoji } from '@milkdown/plugin-emoji'
 import { shiki, shikiConfig } from '@s2nc/milkdown-plugin-shiki'
-import { placeholder, placeholderConfig } from '@s2nc/milkdown-plugin-placeholder'
 import { useFileDialog } from '@vueuse/core'
 import { remoteUpload, remoteUploader } from '@s2nc/milkdown-plugin-upload'
 import { Decoration } from '@milkdown/prose/view'
 import { uploadConfig } from '@milkdown/plugin-upload'
-import { headingIdGenerator } from '@milkdown/preset-commonmark'
+import { commonmark, headingIdGenerator } from '@milkdown/preset-commonmark'
 import { nanoid } from '@milkdown/utils'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
@@ -64,9 +63,10 @@ const plugins = ref([
     },
   },
   // 插件配置
+  { plugin: commonmark }, // 只读模式不需要
   { plugin: listener }, // 只读模式不需要
   { plugin: clipboard }, // 只读模式不需要
-  { plugin: placeholder, config: ctx => ctx.set(placeholderConfig.key, '开始分享你的故事～') },
+  // { plugin: placeholder, config: ctx => ctx.set(placeholderConfig.key, '开始分享你的故事～') },
   { plugin: gfm },
   { plugin: history },
   { plugin: indent },
