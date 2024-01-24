@@ -1,6 +1,6 @@
 {
   "name": "@s2nc/milkdown-plugin-shiki",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "shiki plugin for milkdown.",
   "keywords": [
     "milkdown",
@@ -11,10 +11,11 @@
   "author": "jiannei",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jiannei/milkdown-plugin-shiki.git"
+    "url": "git+https://github.com/jiannei/coditor.git",
+    "directory": "packages/plugin-shiki"
   },
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -33,6 +34,6 @@
   },
   "dependencies": {
     "@milkdown/utils": "^7.3.3",
-    "shikiji": "^0.10.0-beta.9"
+    "shikiji": "^0.10.0"
   }
 }
