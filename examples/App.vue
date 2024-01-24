@@ -19,8 +19,7 @@ import { headingIdGenerator } from '@milkdown/preset-commonmark'
 import { nanoid } from '@milkdown/utils'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import { commandsCtx, defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
-import { MilkdownProvider } from '@milkdown/vue'
-import MilkdownEditor from '@/components/MilkdownEditor.vue'
+import { Coditor } from '@'
 
 const headings = ref([])
 const content = defineModel('content', { default: '' })
@@ -141,9 +140,7 @@ function call(command, payload) {
           </li>
         </ul>
 
-        <MilkdownProvider>
-          <MilkdownEditor ref="editor" :plugins="plugins" />
-        </MilkdownProvider>
+        <Coditor ref="editor" :plugins="plugins" />
       </div>
     </div>
   </div>
