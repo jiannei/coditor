@@ -1,6 +1,6 @@
 {
   "name": "@s2nc/milkdown-plugin-placeholder",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Placeholder plugin for milkdown.",
   "keywords": [
     "milkdown",
