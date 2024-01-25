@@ -2,7 +2,8 @@
 
 > 一个基于 milkdown 类似 typora 风格的编辑器，渐进式插件扩展，支持自定义任何样式，在此基础上可以构建完全属于你的编辑器。
 
-- [milkdown 文档](https://milkdown.dev/)
+- [milkdown](https://milkdown.dev/)
+- [线上地址](https://jiannei.github.io/coditor/)
 
 项目目前使用最新版本 `milkdown 7.3.3`，基于`vue 3.4.15`、`vite 5.0.12`、`unocss 0.58.3`构建，除了 milkdown 提供的[官方插件](https://milkdown.dev/docs/plugin/using-plugins#official-plugins)外，还额外扩展了 3 个插件：
 
