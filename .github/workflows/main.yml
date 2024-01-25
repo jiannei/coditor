@@ -1,16 +1,17 @@
 name: Deploy static content to Pages
 
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: ['main']
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   deploy:
     environment:
@@ -20,15 +21,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set up Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'npm'
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
       - name: Install dependencies
-        run: npm install
+        run: bun install
       - name: Build
-        run: npm run build
+        run: bun run build
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
