@@ -2,7 +2,7 @@
 .DS_Store
 .idea
 node_modules
-src/
+dist
 
 # 忽略指定文件
 .gitignore
