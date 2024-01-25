@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { commonmark, headingIdGenerator } from '@milkdown/preset-commonmark'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import { clipboard } from '@milkdown/plugin-clipboard'
-import { placeholder, placeholderConfig } from '@s2nc/milkdown-plugin-placeholder'
+import { placeholderConfig, placeholder as placeholderPlugin } from '@s2nc/milkdown-plugin-placeholder'
 import { gfm } from '@milkdown/preset-gfm'
 import { history } from '@milkdown/plugin-history'
 import { indent } from '@milkdown/plugin-indent'
@@ -21,10 +21,22 @@ import 'prosemirror-view/style/prosemirror.css'
 import 'prosemirror-tables/style/tables.css'
 import '@/assets/css/editor.css'
 
-defineProps({
+const { readonly, placeholder, hightlight } = defineProps({
   toolbar: {
     type: Array,
     default: () => [],
+  },
+  readonly: {
+    type: Boolean,
+    default: false,
+  },
+  placeholder: {
+    type: String,
+    default: '',
+  },
+  hightlight: {
+    type: Object,
+    default: () => {},
   },
 })
 
@@ -37,7 +49,7 @@ const plugin = ref([
   commonmark,
   listener,
   clipboard,
-  placeholder,
+  placeholderPlugin,
   gfm,
   history,
   indent,
@@ -53,7 +65,7 @@ function config(ctx) {
       attributes: {
         class: 'min-h-[24rem] max-w-none prose prose-slate dark:prose-invert outline-none',
       },
-      editable: () => true,
+      editable: () => !readonly,
     }
   })
 
@@ -79,13 +91,9 @@ function config(ctx) {
     return id
   })
 
-  ctx.set(placeholderConfig.key, '开始分享你的故事～')
+  ctx.set(placeholderConfig.key, placeholder)
 
-  ctx.set(shikiConfig.key, {
-    themes: { light: 'dracula', dark: 'dracula-soft' },
-    langs: ['bash', 'c', 'css', 'go', 'html', 'java', 'javascript', 'js', 'json', 'markdown', 'php', 'python', 'sql', 'sh', 'rust'],
-    dark: false,
-  })
+  ctx.set(shikiConfig.key, hightlight)
 
   ctx.update(uploadConfig.key, (prev) => {
     return {
