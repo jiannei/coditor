@@ -1,6 +1,6 @@
 {
   "name": "@s2nc/coditor",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "a markdown editor based on milkdown.",
   "keywords": [
     "milkdown",
