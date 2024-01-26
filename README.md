@@ -54,8 +54,7 @@ npm run dev
 │   │   ├── CoditorContainer.vue
 │   │   ├── CoditorToobarItem.vue
 │   │   ├── CoditorToorbar.vue
-│   │   ├── MilkdownEditor.vue
-│   │   └── MilkdownEditorWrapper.vue
+│   │   └── MilkdownEditor.vue
 │   ├── hooks                           // composition 风格函数
 │   │   └── usePoem.js
 │   └── index.js
