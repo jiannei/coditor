@@ -16,10 +16,10 @@ import { uploadConfig } from '@milkdown/plugin-upload'
 import { Decoration } from '@milkdown/prose/view'
 import { useFileDialog } from '@vueuse/core'
 import { CoditorContainer, CoditorToobarItem, CoditorToorbar } from '@'
-import MilkdownEditorWrapper from '@/components/MilkdownEditorWrapper.vue'
 import 'prosemirror-view/style/prosemirror.css'
 import 'prosemirror-tables/style/tables.css'
 import '@/assets/css/editor.css'
+import MilkdownEditor from '@/components/MilkdownEditor.vue'
 
 const { readonly, placeholder, hightlight } = defineProps({
   toolbar: {
@@ -137,6 +137,6 @@ function call(command, payload) {
       </CoditorToobarItem>
     </CoditorToorbar>
 
-    <MilkdownEditorWrapper ref="editor" :config="config" :plugin="plugin" />
+    <MilkdownEditor ref="editor" :config="config" :plugin="plugin" />
   </CoditorContainer>
 </template>

@@ -1,6 +1,6 @@
 <script setup>
 import { Milkdown, useEditor } from '@milkdown/vue'
-import { Editor, rootCtx } from '@milkdown/core'
+import { Editor, commandsCtx, rootCtx } from '@milkdown/core'
 
 const { plugin, config } = defineProps({
   plugin: {
@@ -24,7 +24,11 @@ function isLoading() {
   return loading.value
 }
 
-defineExpose({ get, isLoading })
+function call(command, payload) {
+  get().action(ctx => ctx.get(commandsCtx).call(command, payload))
+}
+
+defineExpose({ get, isLoading, call })
 </script>
 
 <template>
