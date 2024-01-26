@@ -5,7 +5,7 @@
 - [milkdown](https://milkdown.dev/)
 - [线上地址](https://jiannei.github.io/coditor/)
 
-项目目前使用最新版本 `milkdown 7.3.3`，基于`vue 3.4.15`、`vite 5.0.12`、`unocss 0.58.3`构建，除了 milkdown 提供的[官方插件](https://milkdown.dev/docs/plugin/using-plugins#official-plugins)外，还额外扩展了 3 个插件：
+项目目前使用最新版本 `milkdown 7.3.3`，基于`vue 3.4.15`、`vite 5.0.12`、`unocss 0.58.4`构建，除了 milkdown 提供的[官方插件](https://milkdown.dev/docs/plugin/using-plugins#official-plugins)外，还额外扩展了 3 个插件：
 
 - [plugin-placeholder](./packages/plugin-placeholder/README.md)：初始内容提示
 - [plugin-shiki](./packages/plugin-shiki/README.md)：[shiki](https://github.com/shikijs/shiki) 代码语法高亮

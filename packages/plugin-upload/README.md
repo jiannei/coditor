@@ -17,7 +17,7 @@ npm i @s2nc/milkdown-plugin-upload
 ```js
 import { Milkdown, useEditor } from '@milkdown/vue'
 import {rootCtx} from '@milkdown/core'
-import { remoteUpload, remoteUploader } from '@s2nc/milkdown-plugin-upload'
+import { remoteUpload, remoteUploader,remoteUploadConfig } from '@s2nc/milkdown-plugin-upload'
 import { uploadConfig } from '@milkdown/plugin-upload'
 
 const { loading, get } = useEditor((root) => {
@@ -29,6 +29,7 @@ const { loading, get } = useEditor((root) => {
       ctx.set(rootCtx, root)
 
       // 配置图片远程上传
+      ctx.set(remoteUploadConfig.key, files => {})// 这里配置接收文件并上传到远程的实现函数
       ctx.update(uploadConfig.key, (prev) => {
         return {
           ...prev,
