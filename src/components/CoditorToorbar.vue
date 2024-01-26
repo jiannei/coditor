@@ -1,5 +1,7 @@
 <script setup>
-defineProps({
+import { provide } from 'vue'
+
+const { toolbar } = defineProps({
   toolbar: {
     type: Array,
     required: true,
@@ -9,6 +11,8 @@ defineProps({
     default: 'ul',
   },
 })
+
+provide('toolbar', toolbar)
 </script>
 
 <template>

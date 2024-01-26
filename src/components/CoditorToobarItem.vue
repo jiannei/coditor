@@ -1,19 +1,19 @@
 <script setup>
+import { inject } from 'vue'
+
 defineProps({
-  command: {
-    type: String,
-    required: true,
-  },
   as: {
     type: String,
     default: 'li',
   },
 })
 const emit = defineEmits(['click'])
+
+const toolbar = inject('toolbar')
 </script>
 
 <template>
-  <component :is="as" @mouseup="emit('click', command)" @mousedown.prevent>
-    <slot />
+  <component :is="as" v-for="(item, key) in toolbar" :key="key" @mouseup="emit('click', item.command)" @mousedown.prevent>
+    <slot :item="item" />
   </component>
 </template>
