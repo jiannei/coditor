@@ -14,14 +14,18 @@ import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
 import { nanoid } from '@milkdown/utils'
 import { uploadConfig } from '@milkdown/plugin-upload'
 import { Decoration } from '@milkdown/prose/view'
-import { useFileDialog } from '@vueuse/core'
+import { useFileDialog, useStorage } from '@vueuse/core'
 import { CoditorContainer, CoditorToobarItem, CoditorToorbar } from '@'
 import 'prosemirror-view/style/prosemirror.css'
 import 'prosemirror-tables/style/tables.css'
 import '@/assets/css/editor.css'
 import MilkdownEditor from '@/components/MilkdownEditor.vue'
 
-const { readonly, placeholder, hightlight } = defineProps({
+const { id, readonly, placeholder, hightlight } = defineProps({
+  id: {
+    type: String,
+    default: 'coditor',
+  },
   toolbar: {
     type: Array,
     default: () => [],
@@ -58,6 +62,8 @@ const plugin = ref([
   remoteUpload,
 ])
 
+const storage = useStorage(id, '')
+
 function config(ctx) {
   ctx.update(editorViewOptionsCtx, (prev) => {
     return {
@@ -69,11 +75,14 @@ function config(ctx) {
     }
   })
 
-  ctx.set(defaultValueCtx, content.value)
+  ctx.set(defaultValueCtx, !readonly ? storage.value : content.value)
 
   // 内容监听
   ctx.get(listenerCtx).markdownUpdated((ctx, markdown) => {
     content.value = markdown
+
+    if (!readonly)
+      storage.value = markdown
   })
 
   ctx.set(headingIdGenerator.key, (node) => {
