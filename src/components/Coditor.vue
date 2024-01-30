@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, version } from 'vue'
 import { commonmark, headingIdGenerator } from '@milkdown/preset-commonmark'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import { clipboard } from '@milkdown/plugin-clipboard'
@@ -8,13 +8,14 @@ import { gfm } from '@milkdown/preset-gfm'
 import { history } from '@milkdown/plugin-history'
 import { indent } from '@milkdown/plugin-indent'
 import { emoji } from '@milkdown/plugin-emoji'
+import { cursor } from '@milkdown/plugin-cursor'
 import { shiki, shikiConfig } from '@s2nc/milkdown-plugin-shiki'
 import { remoteUpload, remoteUploader } from '@s2nc/milkdown-plugin-upload'
 import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
 import { nanoid } from '@milkdown/utils'
 import { uploadConfig } from '@milkdown/plugin-upload'
 import { Decoration } from '@milkdown/prose/view'
-import { useFileDialog, useStorage } from '@vueuse/core'
+import { useDark, useFileDialog, useStorage, useToggle } from '@vueuse/core'
 import { CoditorContainer, CoditorToobarItem, CoditorToorbar } from '@'
 import 'prosemirror-view/style/prosemirror.css'
 import 'prosemirror-tables/style/tables.css'
@@ -60,6 +61,7 @@ const plugin = ref([
   emoji,
   shiki,
   remoteUpload,
+  cursor,
 ])
 
 const storage = useStorage(id, '')
@@ -130,17 +132,44 @@ function call(command, payload) {
 
   editor.value.call(command, payload)
 }
+
+const isDark = useDark({ storageKey: 'theme' })
+
+const toggleDark = useToggle(isDark)
 </script>
 
 <template>
-  <CoditorContainer class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-300 hover:dark:border-slate-600 rounded-md shadow-sm">
-    <CoditorToorbar :toolbar="toolbar" class="w-full bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-t-md flex items-center space-x-1">
-      <CoditorToobarItem v-slot="{ item }" @click="call">
-        <button type="button" class="bg-transparent px-2 py-1 hover:bg-white dark:hover:bg-slate-900 rounded-md cursor-pointer">
-          <span class="inline-block w-4 h-4" :class="`i-tabler:${item.icon}`" />
-        </button>
-      </CoditorToobarItem>
-    </CoditorToorbar>
+  <CoditorContainer class="w-full relative">
+    <div class="sticky top-0 z-50 w-full bg-slate-100 dark:bg-slate-800 px-2 py-1.5 flex items-center justify-between">
+      <CoditorToorbar :toolbar="toolbar" class="flex items-center space-x-1.5">
+        <CoditorToobarItem v-slot="{ item }" @click="call">
+          <button type="button" class="inline-flex items-center bg-transparent p-2 hover:bg-white dark:hover:bg-slate-900 rounded-md hover:shadow-sm cursor-pointer group">
+            <span class="inline-block w-4 h-4 text-slate-7 dark:text-slate-2 group-hover:text-cyan-500" :class="`i-tabler:${item.icon}`" />
+          </button>
+        </CoditorToobarItem>
+      </CoditorToorbar>
+
+      <ul class="flex items-center space-x-3">
+        <li class="inline-flex items-center cursor-pointer hover:bg-white dark:hover:bg-slate-900 p-1.5 rounded-full group hover:shadow-sm" @click="toggleDark()">
+          <span class="w-4 h-4 inline-block text-slate-7 dark:text-slate-2 group-hover:text-cyan-500" :class="{ 'i-tabler:sun': !isDark, ' i-tabler:moon-stars': isDark }" />
+        </li>
+        <li class="inline-flex items-center cursor-pointer hover:bg-white dark:hover:bg-slate-900 p-1.5 rounded-full group hover:shadow-sm">
+          <a class="w-4 h-4 inline-block i-tabler-brand-github text-slate-7 dark:text-slate-2 group-hover:text-cyan-500" href="https://github.com/jiannei/coditor" target="_blank" />
+        </li>
+        <li class="inline-flex items-center space-x-1">
+          <span class="w-4 h-4 inline-block i-tabler-brand-vue text-green-5" />
+          <span class="group">
+            <a href="https://cn.vuejs.org/guide/introduction.html" target="_blank" class="text-sm text-slate-7 dark:text-slate-2 group-hover:text-cyan-500 hover:underline underline-offset-2 decoration-cyan-500 ">{{ version }}</a>
+          </span>
+        </li>
+        <li class="inline-flex items-center space-x-1">
+          <span class="w-5 h-5 inline-block i-snc-milkdown" />
+          <span class="group">
+            <a href="https://milkdown.dev" target="_blank" class="text-sm text-slate-7 dark:text-slate-2 group-hover:text-cyan-500 hover:underline underline-offset-2 decoration-cyan-500 ">7.3.3</a>
+          </span>
+        </li>
+      </ul>
+    </div>
 
     <MilkdownEditor ref="editor" :config="config" :plugin="plugin" />
   </CoditorContainer>

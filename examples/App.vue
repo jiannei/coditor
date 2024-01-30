@@ -38,9 +38,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-dvh flex items-center justify-center bg-stone-100 dark:bg-slate-800">
-    <div class="max-w-6xl mx-auto w-full">
-      <Coditor v-model:content="content" :toolbar="toolbar" :hightlight="hightlight" placeholder="今天准备分享什么呢" />
-    </div>
+  <div class="h-dvh bg-white dark:bg-slate-900">
+    <Coditor v-model:content="content" :toolbar="toolbar" :hightlight="hightlight" placeholder="今天准备分享什么呢" />
   </div>
 </template>
