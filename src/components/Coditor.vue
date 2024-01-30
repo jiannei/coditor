@@ -9,6 +9,7 @@ import { history } from '@milkdown/plugin-history'
 import { indent } from '@milkdown/plugin-indent'
 import { emoji } from '@milkdown/plugin-emoji'
 import { cursor } from '@milkdown/plugin-cursor'
+import { math } from '@milkdown/plugin-math'
 import { shiki, shikiConfig } from '@s2nc/milkdown-plugin-shiki'
 import { remoteUpload, remoteUploader } from '@s2nc/milkdown-plugin-upload'
 import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
@@ -20,6 +21,7 @@ import { CoditorContainer, CoditorToobarItem, CoditorToorbar } from '@'
 import 'prosemirror-view/style/prosemirror.css'
 import 'prosemirror-tables/style/tables.css'
 import '@/assets/css/editor.css'
+import 'katex/dist/katex.min.css'
 import MilkdownEditor from '@/components/MilkdownEditor.vue'
 
 const { id, readonly, placeholder, hightlight } = defineProps({
@@ -62,6 +64,7 @@ const plugin = ref([
   shiki,
   remoteUpload,
   cursor,
+  math,
 ])
 
 const storage = useStorage(id, '')

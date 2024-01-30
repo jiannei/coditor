@@ -30,6 +30,7 @@
   "dependencies": {
     "@milkdown/core": "^7.3.3",
     "@milkdown/plugin-cursor": "^7.3.3",
+    "@milkdown/plugin-math": "^7.3.3",
     "@milkdown/vue": "^7.3.3",
     "vue": "^3.4.15"
   },
