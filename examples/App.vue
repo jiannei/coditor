@@ -38,7 +38,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-dvh bg-white dark:bg-slate-900">
+  <div>
     <Coditor v-model:content="content" :toolbar="toolbar" :hightlight="hightlight" placeholder="今天准备分享什么呢" />
   </div>
 </template>
