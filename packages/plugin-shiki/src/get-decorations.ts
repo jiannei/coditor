@@ -1,5 +1,5 @@
 import type { Node } from '@milkdown/prose/model'
-import type { BundledTheme, Highlighter } from 'shikiji'
+import type { BundledTheme, Highlighter } from 'shiki'
 import { Decoration, DecorationSet } from '@milkdown/prose/view'
 import { findChildren } from '@milkdown/prose'
 

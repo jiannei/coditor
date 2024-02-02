@@ -2,8 +2,8 @@ import { $ctx, $proseAsync } from '@milkdown/utils'
 import { findChildren } from '@milkdown/prose'
 import { Plugin, PluginKey } from '@milkdown/prose/state'
 import type { Ctx, MilkdownPlugin } from '@milkdown/ctx'
-import type { BundledLanguage, BundledTheme } from 'shikiji'
-import { getHighlighter } from 'shikiji'
+import type { BundledLanguage, BundledTheme } from 'shiki'
+import { getHighlighter } from 'shiki'
 import { getDecorations } from './get-decorations'
 
 export interface ShikiConfigOptions {
