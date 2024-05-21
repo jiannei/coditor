@@ -22,7 +22,7 @@ export function getDecorations(doc: Node, name: string, highlighter: Highlighter
       return
     }
 
-    const nodes = highlighter.codeToThemedTokens(block.node.textContent, {
+    const nodes = highlighter.codeToTokensBase(block.node.textContent, {
       lang: language,
       theme,
     }).map(token =>

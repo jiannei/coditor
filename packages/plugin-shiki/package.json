@@ -1,6 +1,6 @@
 {
   "name": "@s2nc/milkdown-plugin-shiki",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "shiki plugin for milkdown.",
   "keywords": [
     "milkdown",
@@ -27,13 +27,13 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.6.4",
-    "eslint": "^8.56.0",
-    "typescript": "^5.3.3",
-    "vite": "^5.0.12"
+    "@antfu/eslint-config": "^2.18.1",
+    "eslint": "^9.3.0",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
   },
   "dependencies": {
-    "@milkdown/utils": "^7.3.3",
-    "shiki": "^1.0.0-beta.5"
+    "@milkdown/utils": "^7.3.6",
+    "shiki": "^1.6.0"
   }
 }
