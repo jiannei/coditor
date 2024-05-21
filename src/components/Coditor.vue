@@ -14,7 +14,7 @@ import { shiki, shikiConfig } from '@s2nc/milkdown-plugin-shiki'
 import { remoteUpload, remoteUploader } from '@s2nc/milkdown-plugin-upload'
 import { defaultValueCtx, editorViewOptionsCtx } from '@milkdown/core'
 import { nanoid } from '@milkdown/utils'
-import { uploadConfig } from '@milkdown/plugin-upload'
+import { upload, uploadConfig } from '@milkdown/plugin-upload'
 import { Decoration } from '@milkdown/prose/view'
 import { useDark, useFileDialog, useStorage, useToggle } from '@vueuse/core'
 import { CoditorContainer, CoditorToobarItem, CoditorToorbar } from '@'
@@ -62,6 +62,7 @@ const plugin = ref([
   indent,
   emoji,
   shiki,
+  upload,
   remoteUpload,
   cursor,
   math,
